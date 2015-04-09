@@ -79,7 +79,8 @@
 \renewcommand{\v}{\lal{v}}
 \newcommand{\V}{\rscr{V}}
 \newcommand{\z}{\lal{z}}
-\newcommand{\fg}{\textfrak{g}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fz}{\mathfrak{z}}
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\RR}{\mathbb{R}}
@@ -133,37 +134,25 @@ an algorithm for computing the metric was implemented.
 
 \section{Preliminaries}
 
-In order to begin exploring the geometry of a Lie Algebra, we must answer
-the question, "What is a Lie Algebra?"
-
 \begin{definition}
 
-A Lie Algebra is a vector space with a non-associative multiplication
-called the "Lie Bracket"($[\cdot,\cdot]$) defined on it.
+A Lie Algebra is a vector space, $\fg$, with a non-associative multiplication
+called the \emph{Lie Bracket} $[\cdot,\cdot]$ defined on it.
 \\
-\\Let $\fg$ be a vector space over a field $\FF$ 
-\\Let the binary operator $ [\cdot,\cdot]: \fg \times \fg \to \fg$ be called the "Lie Bracket" 
-\\Let $x,y,z \in \fg$ and let $\a \in \FF$
-\\$\fg$ is called a "Lie Algebra" if and only if it satisfies the following three properties:
-\\\\(1) [x,x]=$\Vec{0}$ (Alternating)
-\\\\(2) [$x+y,z$] = [$x,z$]+[$y,z$]\quad and \quad [$\a x,y$]=[$x, \a y$]=$\a$[$x, y$] (Bilinearity)
-\\\\(3)  [$x$,[$y,z$]] + [$z$,[$x,y$]] + [$y$,[$z,x$]] $= \Vec{0}$ (Jacobi Identity)
+\\Let $\fg$ be a real vector space.
+\\The Lie Bracket is a binary operator $ [\cdot,\cdot]: \fg \times \fg \to \fg$
+that satisfies the following three properties:
+\\For $x,y,z \in \fg$ and $\a \in \RR$
+\begin{enumerate}
+    \item  $[x,x]=\Vec{0}$ 
+
+    \item  $[x+y,z] = [x,z]+[y,z]\quad \text{and} \quad [\a x,y]=[x, \a y]=\a[x, y]$ 
+
+    \item  $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = \Vec{0}$ 
+\end{enumerate}
 \end{definition}
-It follows directly that (1) and (2) that $[\cdot,\cdot]$ is anticommutative i.e. [$x,y$] = -[$y,x$]
-
-\begin{definition}
-    $<\cdot,\cdot>:\fg\times\fg\to\FF$ called the inner product.
-\end{definition}
-
-
-%Here's where you define all of the key mathematical objects that you'll
-%be working with, and state ``well-known'' results such as Adams's Theorem.
-
-
-\section{Results}
-By bilinearity, every alternating product is also skew-symmetric, regardless of the characteristic of the underlying field. Indeed, if [ , ] is alternating
-    then
-
+It follows directly from (1) and (2) that $[\cdot,\cdot]$ is skew-symmetric; \emph{i.e.} [$x,y$] = -[$y,x$]
+By bilinearity, every alternating product is also skew-symmetric, regardless of the characteristic of the underlying field. Indeed, if [ , ] is alternating then
     \begin{align}
         0 &= [x + y, x + y] 
         \\&= [x + y, x] + [x + y, y]
@@ -172,6 +161,44 @@ By bilinearity, every alternating product is also skew-symmetric, regardless of 
         \\0&=         [x, y] + [y, x]
         \\\implies [x,y] &= -[y,x]
     \end{align}
+    In order to give the Lie Algebra geometry, we will introduce another
+    operator $\langle\cdot,\cdot\rangle$ called the inner product.
+\begin{definition}
+    An \emph{inner product} on the vector $\fg$ is a \emph{symmetric, non-degenerate, bilinear and positive definite}
+    function on $\fg$.  That is, an inner product on $\fg$ is a function $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$
+    that satifies the following properties:
+    For $x,y,z \in \fg$
+    \begin{enumerate}
+        \item $\langle x,y \rangle = \langle y,x \rangle$
+        \item If $\langle x,y \rangle = 0 \quad \forall y \in \fg$ 
+            \\then $x = \Vec{0}$
+        \item $\langle x+y,z \rangle = \langle x+y,z \rangle + \langle x+y,z \rangle$
+        \\and $\a \langle x,y \rangle = \langle \a x,y \rangle = \langle x,\a y \rangle$
+        \item $\langle x,x \rangle \geq 0$ 
+            \\and $\langle x,x\rangle = 0 \implies x=\Vec{0}$
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    A basis vector, $\fz$, of $\fg$ is called the \emph{center} of $\fg$ if
+    \\$[x,\fz] = \Vec{0} \quad \forall x \in \fg$
+\end{definition}
+
+\begin{definition}
+    A Lie Algebra, $\fg$ is called two step nilpotent if and only if
+    \\$[[x,y],z] = \Vec{0} \quad \forall x,y,z \in \fg$
+\end{definition}
+
+\begin{definition}
+    For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is the function
+    \\$\operatorname{ad}_x (y) = [x,y] \quad \forall y \in \fg$
+
+\end{definition}
+%Here's where you define all of the key mathematical objects that you'll
+%be working with, and state ``well-known'' results such as Adams's Theorem.
+
+
+\section{Results}
 
 \section{Conclusion}
 
