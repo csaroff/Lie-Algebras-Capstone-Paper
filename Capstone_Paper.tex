@@ -81,19 +81,44 @@
 \newcommand{\z}{\lal{z}}
 \newcommand{\fg}{\mathfrak{g}}
 \newcommand{\fz}{\mathfrak{z}}
+\newcommand{\fv}{\mathfrak{v}}
+\newcommand{\fh}{\mathfrak{h}}
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\FF}{\mathbb{F}}
+%\newcommand{\ad}[1]{\operatorname{ad}_{#1}}
 
 \makeatletter
 \newcommand{\ad}[1]{\mathop{\operator@font ad}\nolimits_{#1}}
 \makeatother
 
 % show labels in margin (must be last package added)
-\usepackage{showlabels, yfonts}
+%\usepackage{showlabels, yfonts}
+
+% tiks packages
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usepackage{filecontents}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+
+\begin{filecontents*}{pic.tikz}
+    \begin{tikzpicture}
+        \draw (-4,4) -- (1,2);
+        \draw (1, 2) -- (4,4);
+        \draw (-1,6) -- (4,4);
+        \draw (-1,6) -- (-4,4);
+        \draw [-] (0,8) -- (0,4);
+        \draw [-] (0,2.4) -- (0,0);
+        %\draw [dashed] (4,0) -- (4,3); 
+        \node [right] at (0, 8) {$\fz$};
+        \node [below] at (4,4) {$\fv$};
+    \end{tikzpicture}
+\end{filecontents*}
 
 % input information for the title page here:
 \preprint{}
@@ -119,7 +144,7 @@ Given an arbitrary Lie Algebra, how do we measure angles between its elements?
 
 We find that an arbitrary Lie Algebra's Lie Bracket can be fully represented
 a sequence of Matrices, while it's inner product can be fully represented
-by one matrix.
+by a single matrix.
 
 Once a relationship was found between the Lie bracket and the inner product,
 an algorithm for computing the metric was implemented.
@@ -178,11 +203,17 @@ By bilinearity, every alternating product is also skew-symmetric, regardless of 
             \\and $\langle x,x\rangle = 0 \implies x=\Vec{0}$
     \end{enumerate}
 \end{definition}
+    A Lie Algebra now looks similar to a vector over $\RR$ with the Lie Bracket representing
+    the cross product and the inner product representing the dot product.
 
 \begin{definition}
-    A basis vector, $\fz$, of $\fg$ is called the \emph{center} of $\fg$ if
+    The \emph{center} of a Lie Algebra, $\fg$ is
+    \\$\{\fz \in \fg \quad | \quad [\fz,x] = \Vec{0} \quad \forall x \in \fg\}$
+    \\A vector, $\fz$, of $\fg$ is said to be in the \emph{center} of $\fg$ if
     \\$[x,\fz] = \Vec{0} \quad \forall x \in \fg$
 \end{definition}
+It turns out that the center is not only a subspace of $\fg$ and therefore a vector space,
+but it is also an Algebra.
 
 \begin{definition}
     A Lie Algebra, $\fg$ is called two step nilpotent if and only if
@@ -191,9 +222,31 @@ By bilinearity, every alternating product is also skew-symmetric, regardless of 
 
 \begin{definition}
     For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is the function
-    \\$\operatorname{ad}_x (y) = [x,y] \quad \forall y \in \fg$
-
+    \\$\ad{x}(y) = [x,y] \quad \forall y \in \fg$
 \end{definition}
+
+\begin{definition}
+    The Heisenberg Algebra, $\fh$,  is a specific type of Lie Algebra, that is is
+    spanned by three vectors $e_1, e_2, z$.
+    \\It is defined by it's Lie Bracket:
+    \\$[e_1, e_2] = z$
+    \\$[e_1, \fz] = \Vec{0}$
+    \\$[e_2, \fz] = \Vec{0}$
+\end{definition}
+The center and non-center of the Heisenberg Algebra are somewhat distinct elements.  
+If $\fv$ is the vector space whose basis is $\{e_1, e_2\}$, then 
+$\fv$ looks like a plane, while $\fz$ is the span of $z$ and therefore looks like
+a line.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=30mm]{pic.tikz} %input file
+        \label{fig:pic} %label name
+    \caption{\footnotesize The Heisenberg Algebra, $\fh$} %caption
+\end{figure}
+
+\pagebreak
+
 %Here's where you define all of the key mathematical objects that you'll
 %be working with, and state ``well-known'' results such as Adams's Theorem.
 
