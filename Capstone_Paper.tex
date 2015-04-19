@@ -18,10 +18,10 @@
 % "fancy" font
 \usepackage{fourier}
 \usepackage[T1]{fontenc}
-   
+
 % make reference header the right font size
 \renewcommand\refname{\Large References}
-   
+
 % theorems, remarks, etc using Phil Parker's "remexpp.sty"
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{prop}[theorem]{Proposition}
@@ -30,7 +30,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \newremark{definition}[theorem]{Definition}
 \newremark{example}[theorem]{Example}
-\newremark{remark}[theorem]{Remark} 
+\newremark{remark}[theorem]{Remark}
 
 % make rsfs, TeX \cal, and Euler script *all* available
 \usepackage{mathrsfs}
@@ -46,7 +46,7 @@
 \SelectTips{cm}{}
 
 \arraycolsep .2em
-   
+
 % new commands
 \renewcommand{\a}{\alpha}
 \newcommand{\Aut}[1]{\textrm{Aut}(#1)}
@@ -114,7 +114,7 @@
         \draw (-1,6) -- (-4,4);
         \draw [-] (0,8) -- (0,4);
         \draw [-] (0,2.4) -- (0,0);
-        %\draw [dashed] (4,0) -- (4,3); 
+        %\draw [dashed] (4,0) -- (4,3);
         \node [right] at (0, 8) {$\fz$};
         \node [below] at (4,4) {$\fv$};
     \end{tikzpicture}
@@ -138,9 +138,10 @@
 %how it should look, I am writing a lot of words. Your abstract should be
 %concise but informative. You should only write the key ideas in the abstract.
 %Do not try to explain any of your results / findings here.
-We study the geometry of Lie Algebra and attempt answer the following questions.
-What is a Lie Algebra? What does it mean for a Lie Algebra to have geometry?
-Given an arbitrary Lie Algebra, how do we measure angles between its elements?
+We study the geometry of Lie Algebra and attempt answer the following
+questions. What is a Lie Algebra? What does it mean for a Lie Algebra to have
+geometry? Given an arbitrary Lie Algebra, how do we measure angles between its
+elements?
 
 We find that an arbitrary Lie Algebra's Lie Bracket can be fully represented
 a sequence of Matrices, while it's inner product can be fully represented
@@ -161,82 +162,114 @@ an algorithm for computing the metric was implemented.
 
 \begin{definition}
 
-A Lie Algebra is a vector space, $\fg$, with a non-associative multiplication
-called the \emph{Lie Bracket} $[\cdot,\cdot]$ defined on it.
+    A \emph{Lie Algebra} is a vector space, $\fg$, with a non-associative
+    multiplication called the \emph{Lie Bracket} $[\cdot,\cdot]$ defined on it.
 \\
-\\Let $\fg$ be a real vector space.
 \\The Lie Bracket is a binary operator $ [\cdot,\cdot]: \fg \times \fg \to \fg$
 that satisfies the following three properties:
-\\For $x,y,z \in \fg$ and $\a \in \RR$
+\\for $x,y,z \in \fg$ and $\a \in \RR$:
 \begin{enumerate}
-    \item  $[x,x]=\Vec{0}$ 
+    \item  $[x,x]=\Vec{0}$,
 
-    \item  $[x+y,z] = [x,z]+[y,z]\quad \text{and} \quad [\a x,y]=[x, \a y]=\a[x, y]$ 
+    \item  $[x+y,z] = [x,z]+[y,z]\quad
+        \text{and} \quad [\a x,y]=[x, \a y]=\a[x, y]$,
 
-    \item  $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = \Vec{0}$ 
+    \item  $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = \Vec{0}$.
 \end{enumerate}
 \end{definition}
-It follows directly from (1) and (2) that $[\cdot,\cdot]$ is skew-symmetric; \emph{i.e.} [$x,y$] = -[$y,x$]
-By bilinearity, every alternating product is also skew-symmetric, regardless of the characteristic of the underlying field. Indeed, if [ , ] is alternating then
+It follows directly from (1) and (2) that $[\cdot,\cdot]$ is skew-symmetric;
+\emph{i.e.} [$x,y$] = -[$y,x$] By bilinearity, every alternating product is
+also skew-symmetric, regardless of the characteristic of the underlying field.
+Indeed, if [ , ] is alternating then
     \begin{align}
-        0 &= [x + y, x + y] 
+        \Vec{0} &= [x + y, x + y]
         \\&= [x + y, x] + [x + y, y]
         \\&= [x,x] + [y, x] + [x + y, y]
         \\&= [x,x] + [y, x] + [x, y] + [y, y]
-        \\0&=         [x, y] + [y, x]
+        \\\Vec{0}&=         [x, y] + [y, x]
         \\\implies [x,y] &= -[y,x]
     \end{align}
+    Conversely, if $[,]$ is skew-symmetric, then
+    \begin{align}
+        [x,x] &= -[x,x]
+        \\ [x,x]+[x,x]&=\Vec{0}
+        \\ 2([x,x])&=\Vec{0}
+    \end{align}
+    As long as $2 \neq 0$, $[,]$ is alternating.
+
+
     In order to give the Lie Algebra geometry, we will introduce another
     operator $\langle\cdot,\cdot\rangle$ called the inner product.
 \begin{definition}
-    An \emph{inner product} on the vector $\fg$ is a \emph{symmetric, non-degenerate, bilinear and positive definite}
-    function on $\fg$.  That is, an inner product on $\fg$ is a function $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$
-    that satifies the following properties:
-    For $x,y,z \in \fg$
+    An \emph{inner product} on the vector $\fg$ is a
+    \emph{real-valued, symmetric, non-degenerate, bilinear, positive definite}
+    function on $\fg$.  That is, an inner product on $\fg$ is a function
+    $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$ that satifies the following
+    properties:
+    \\for $x,y,z \in \fg$.
     \begin{enumerate}
-        \item $\langle x,y \rangle = \langle y,x \rangle$
-        \item If $\langle x,y \rangle = 0 \quad \forall y \in \fg$ 
-            \\then $x = \Vec{0}$
-        \item $\langle x+y,z \rangle = \langle x+y,z \rangle + \langle x+y,z \rangle$
-        \\and $\a \langle x,y \rangle = \langle \a x,y \rangle = \langle x,\a y \rangle$
-        \item $\langle x,x \rangle \geq 0$ 
-            \\and $\langle x,x\rangle = 0 \implies x=\Vec{0}$
+        \item $\langle x,y \rangle = \langle y,x \rangle$,
+        \item If $\langle x,y \rangle = 0 \quad \forall y \in \fg$
+            then $x = \Vec{0}$,
+        \item
+            $\langle x+y,z \rangle = \langle x,z \rangle + \langle y,z \rangle$
+            and $\a \langle x,y \rangle = \langle \a x,y \rangle
+            = \langle x,\a y \rangle$,
+        \item $\langle x,x \rangle \geq 0$
+            and $\langle x,x\rangle = 0 \implies x=\Vec{0}$.
     \end{enumerate}
 \end{definition}
-    A Lie Algebra now looks similar to a vector over $\RR$ with the Lie Bracket representing
-    the cross product and the inner product representing the dot product.
+    On example of a metric Lie algebra is the vector space $\RR^3$ with the
+    cross product as its Lie Bracket and the dot product as its inner product.
 
 \begin{definition}
     The \emph{center} of a Lie Algebra, $\fg$ is
-    \\$\{\fz \in \fg \quad | \quad [\fz,x] = \Vec{0} \quad \forall x \in \fg\}$
-    \\A vector, $\fz$, of $\fg$ is said to be in the \emph{center} of $\fg$ if
-    \\$[x,\fz] = \Vec{0} \quad \forall x \in \fg$
+    \\\[\fz=\{z \in \fg \quad | \quad [z,x]
+    = \Vec{0} \quad \forall x \in \fg\}.\]
+    \\A vector, $z$, of $\fg$ is said to be in the center of $\fg$ if
+    \\\[[x,z] = \Vec{0} \quad \forall x \in \fg.\]
 \end{definition}
-It turns out that the center is not only a subspace of $\fg$ and therefore a vector space,
-but it is also an Algebra.
 
 \begin{definition}
-    A Lie Algebra, $\fg$ is called two step nilpotent if and only if
+    A Lie Algebra, $\fg$ is called \emph{one-step nilpotent} if and only if
+    \\\[[x,y] = \Vec{0} \quad \forall x,y \in \fg.\]
+    Equivalently, $\fz = \fg.$
+\end{definition}
+
+It turns out that the center is not only a subspace of $\fg$ and therefore a
+vector space, but it is also an one-step nilpotent Lie Algebra.  This is
+because the Lie Bracket is defined by an identity, and the center inherits its
+properties.
+
+\begin{definition}
+    A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
     \\$[[x,y],z] = \Vec{0} \quad \forall x,y,z \in \fg$
+    and $\fz \neq \fg$
 \end{definition}
 
 \begin{definition}
-    For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is the function
+    For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is
+    the function
     \\$\ad{x}(y) = [x,y] \quad \forall y \in \fg$
 \end{definition}
 
-\begin{definition}
-    The Heisenberg Algebra, $\fh$,  is a specific type of Lie Algebra, that is is
+If $\fg$ is two-step nilpotent, then for all $x \in \NN$, $\ad{x}{}$ is a
+linear function
+\\$\ad{x}{}: \NN \to \fz$
+
+\begin{example}
+    The Heisenberg Algebra, $\fh$,  is a specific type of Lie Algebra, that is
     spanned by three vectors $e_1, e_2, z$.
-    \\It is defined by it's Lie Bracket:
+    \\It's Lie Bracket is defined on this basis by:
     \\$[e_1, e_2] = z$
-    \\$[e_1, \fz] = \Vec{0}$
-    \\$[e_2, \fz] = \Vec{0}$
-\end{definition}
-The center and non-center of the Heisenberg Algebra are somewhat distinct elements.  
-If $\fv$ is the vector space whose basis is $\{e_1, e_2\}$, then 
-$\fv$ looks like a plane, while $\fz$ is the span of $z$ and therefore looks like
-a line.
+    \\$[e_1, z] = \Vec{0}$
+    \\$[e_2, z] = \Vec{0}$
+\end{example}
+The center and non-center of the Heisenberg Algebra are somewhat distinct
+elements.
+If $\fv$ is the vector space whose basis is $\{e_1, e_2\}$, then
+$\fv$ looks like a plane, while $\fz$ is the span of $z$ and therefore looks
+like a line.
 
 \begin{figure}[h]
     \centering
@@ -256,8 +289,8 @@ a line.
 \section{Conclusion}
 
 Wrap it all up in this section. You can talk about what you learned, what
-you found most interesting, and directions for ``future work'' or an alternative
-approach that may yield better results.
+you found most interesting, and directions for ``future work'' or an
+alternative approach that may yield better results.
 
 \begin{thebibliography}{99}
 \bibitem{CP4}
@@ -267,7 +300,8 @@ nilpotent Lie groups, \DGS\ preprint, Wichita: 2000.
 
 \bibitem{K1}
 A.\,Kaplan, Fundamental solutions for a class of hypoelliptic PDE
-generated by composition of quadratic forms, {\it Trans. of the A.M.S.} {\bf 258}
+generated by composition of quadratic forms, {\it Trans. of the A.M.S.}
+{\bf 258}
 (1980) 147--153.
 
 \bibitem{K2}
@@ -278,7 +312,7 @@ A.\,Kaplan, Riemannian nilmanifolds attached to Clifford modules,
 A.\,Kaplan, On the geometry of groups of Heisenberg type, {\it Bull.
 London Math. Soc.} {\bf 15} (1983) 35--42.
 
-\bibitem{KT} 
+\bibitem{KT}
 A.\,Kaplan and A.\,Tiraboschi, Automorphisms of Non-Singular
 Nilpotent Lie Algebras, {\it J. Lie Theory} {\bf 23} (2013) 1085--1100.
 \end{thebibliography}
