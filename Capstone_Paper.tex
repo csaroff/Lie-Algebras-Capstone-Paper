@@ -67,7 +67,8 @@
 \renewcommand{\H}{\rscr{H}}
 \newcommand{\hp}{\h_{2p + 1}}
 \newcommand{\iso}{\cong}
-\newcommand{\lag}{\mathfrak{g}}
+%\newcommand{\lag}{\mathfrak{g}}
+\newcommand{\lag}[1]{\mathfrak{#1}}
 \newcommand{\lal}[1]{\mathfrak{#1}}
 \newcommand{\n}{\lal{n}}
 \newcommand{\pplus}{+\mspace{-10 mu}+}
@@ -224,16 +225,16 @@ Indeed, if [ , ] is alternating then
 
 \begin{definition}
     The \emph{center} of a Lie Algebra, $\fg$ is
-    \\\[\fz=\{z \in \fg \quad | \quad [z,x]
-    = \Vec{0} \quad \forall x \in \fg\}.\]
+    \\\[\fz=\{z \in \fg \mid [z,x]
+    = \Vec{0} \; \forall x \in \fg\}.\]
     \\A vector, $z$, of $\fg$ is said to be in the center of $\fg$ if
-    \\\[[x,z] = \Vec{0} \quad \forall x \in \fg.\]
+    \\\[[x,z] = \Vec{0} \; \forall x \in \fg.\]
 \end{definition}
 
 \begin{definition}
     A Lie Algebra, $\fg$ is called \emph{one-step nilpotent} if and only if
-    \\\[[x,y] = \Vec{0} \quad \forall x,y \in \fg.\]
-    Equivalently, $\fz = \fg.$
+    \[[x,y] = \Vec{0} \; \forall x,y \in \fg. \]
+    Which is equivalent to \[\fz = \fg.\]
 \end{definition}
 
 It turns out that the center is not only a subspace of $\fg$ and therefore a
@@ -243,19 +244,34 @@ properties.
 
 \begin{definition}
     A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
-    \\$[[x,y],z] = \Vec{0} \quad \forall x,y,z \in \fg$
-    and $\fz \neq \fg$
+    \[
+        [[x,y],z] = \Vec{0} \; \forall x,y,z \in \fg
+        \text{and} \fz \neq \fg
+    \]
 \end{definition}
 
 \begin{definition}
     For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is
     the function
-    \\$\ad{x}(y) = [x,y] \quad \forall y \in \fg$
+    \[
+        \ad{x}(y) = [x,y] \; \forall y \in \fg
+    \]
 \end{definition}
 
-If $\fg$ is two-step nilpotent, then for all $x \in \NN$, $\ad{x}{}$ is a
+Fixing $x \in \lag{g}$, $\ad{x} = \br{x}{\ }$ becomes a function from $\lag{g}$
+to itself.
+
+If $\fg$ is two-step nilpotent, then for all $x \in \fg$, $\ad{x}{}$ is a
 linear function
-\\$\ad{x}{}: \NN \to \fz$
+\\$\ad{x}{}: \fg \to \fz$
+
+\begin{definition}
+    One can then define a map $j_x :\lag{g} \to \lag{g}$ by the formula
+    \[
+    \langle\br{x}{y},z\rangle = \langle y,j_x(z)\rangle
+    \]
+    for all $y, z \in \lag{g}$.
+\end{definition}
 
 \begin{example}
     The Heisenberg Algebra, $\fh$,  is a specific type of Lie Algebra, that is
