@@ -12,7 +12,9 @@
 \usepackage{remexpp,pprroof,dgstpp}
 
 % other packages
-\usepackage{setspace, esvect}
+\usepackage{setspace,
+%esvect
+}
 %\usepackage{hyperref,color}
 
 % "fancy" font
@@ -53,6 +55,8 @@
 \newcommand{\B}{\rscr{B}}
 \newcommand{\br}[2]{\left[#1,#2\right]}
 \newcommand{\bre}{\br{\ }{\,}}
+\newcommand{\inp}[2]{\langle #1, #2 \rangle}
+\newcommand{\inpe}{\inp{\ }{\,}}
 \newcommand{\ddg}{\ddot{\g}}
 \newcommand{\dg}{\dot{\g}}
 \newcommand{\DGS}{D{\kern-.375em}G{\kern-.2em}S}
@@ -84,6 +88,7 @@
 \newcommand{\fz}{\mathfrak{z}}
 \newcommand{\fv}{\mathfrak{v}}
 \newcommand{\fh}{\mathfrak{h}}
+\newcommand{\zvec}{\mathbf{0}}
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\RR}{\mathbb{R}}
@@ -139,17 +144,11 @@
 %how it should look, I am writing a lot of words. Your abstract should be
 %concise but informative. You should only write the key ideas in the abstract.
 %Do not try to explain any of your results / findings here.
-We study the geometry of Lie Algebra and attempt answer the following
-questions. What is a Lie Algebra? What does it mean for a Lie Algebra to have
-geometry? Given an arbitrary Lie Algebra, how do we measure angles between its
-elements?
-
-We find that an arbitrary Lie Algebra's Lie Bracket can be fully represented
-a sequence of Matrices, while it's inner product can be fully represented
-by a single matrix.
-
-Once a relationship was found between the Lie bracket and the inner product,
-an algorithm for computing the metric was implemented.
+We examine what Lie Algebras are, what operators are defined on them and how to
+represent those operators as matrices.  We also examine how to use linear
+algebra to apply these operators to vectors.  Examples of these operators are
+described in algebraic form and an algorithm is given for converting them into
+matrix form.
 }
 \msc{}{}
 
@@ -164,40 +163,46 @@ an algorithm for computing the metric was implemented.
 \begin{definition}
 
     A \emph{Lie Algebra} is a vector space, $\fg$, with a non-associative
-    multiplication called the \emph{Lie Bracket} $[\cdot,\cdot]$ defined on it.
+    multiplication called the \emph{Lie Bracket} $\bre$ defined on it.
 \\
-\\The Lie Bracket is a binary operator $ [\cdot,\cdot]: \fg \times \fg \to \fg$
+\\The Lie Bracket is a binary operator $ \bre: \fg \times \fg \to \fg$
 that satisfies the following three properties:
 \\for $x,y,z \in \fg$ and $\a \in \RR$:
 \begin{enumerate}
-    \item  $[x,x]=\Vec{0}$,
+    \item  $\br{x}{x}=\zvec$,
 
-    \item  $[x+y,z] = [x,z]+[y,z]\quad
-        \text{and} \quad [\a x,y]=[x, \a y]=\a[x, y]$,
+    \item  $\br{x+y}{z} = \br{x}{z}+\br{y}{z}\quad
+        \text{and} \quad \br{\a x}{y}=\br{x}{ \a y}=\a\br{x}{y}$,
 
-    \item  $[x,[y,z]] + [z,[x,y]] + [y,[z,x]] = \Vec{0}$.
+    \item  $\br{x}{\br{y}{z}} + \br{z}{\br{x}{y}} + \br{y}{\br{z}{x}} = \zvec$.
 \end{enumerate}
 \end{definition}
-It follows directly from (1) and (2) that $[\cdot,\cdot]$ is skew-symmetric;
-\emph{i.e.} [$x,y$] = -[$y,x$] By bilinearity, every alternating product is
-also skew-symmetric, regardless of the characteristic of the underlying field.
-Indeed, if [ , ] is alternating then
+It follows directly from (1) and (2) that $\bre$ is skew-symmetric;
+\emph{i.e.} $\br{x}{y}$ = $-\br{y}{x}$
+\\By bilinearity, every alternating product is also skew-symmetric, regardless
+of the characteristic of the underlying field.
+\\Indeed, if $\bre$ is alternating then
     \begin{align}
-        \Vec{0} &= [x + y, x + y]
-        \\&= [x + y, x] + [x + y, y]
-        \\&= [x,x] + [y, x] + [x + y, y]
-        \\&= [x,x] + [y, x] + [x, y] + [y, y]
-        \\\Vec{0}&=         [x, y] + [y, x]
-        \\\implies [x,y] &= -[y,x]
+        \zvec &= \br{x + y}{x + y}
+        \\&= \br{x + y}{x} + \br{x + y}{y}
+        \\&= \br{x}{x} + \br{y}{x} + \br{x + y}{y}
+        \\&= \br{x}{x} + \br{y}{x} + \br{x}{y} + \br{y}{y}
+        \\\zvec&=         \br{x}{y} + \br{y}{x}
+        \\\implies \br{x}{y} &= -\br{y}{x}
     \end{align}
-    Conversely, if $[,]$ is skew-symmetric, then
+    Conversely, if $\bre$ is skew-symmetric, then
     \begin{align}
-        [x,x] &= -[x,x]
-        \\ [x,x]+[x,x]&=\Vec{0}
-        \\ 2([x,x])&=\Vec{0}
+        \br{x}{x} &= -\br{x}{x}
+        \\ \br{x}{x}+\br{x}{x}&=\zvec
+        \\ 2(\br{x}{x})&=\zvec
     \end{align}
-    As long as $2 \neq 0$, $[,]$ is alternating.
+    As long as $2 \neq 0$, $\bre$ is alternating.
 
+    It turns out that $\RR^3$ with the cross product is a Lie Algebra with the
+    cross product as its Lie Bracket.
+
+    \begin{example}
+    \end{example}
 
     In order to give the Lie Algebra geometry, we will introduce another
     operator $\langle\cdot,\cdot\rangle$ called the inner product.
@@ -205,19 +210,19 @@ Indeed, if [ , ] is alternating then
     An \emph{inner product} on the vector $\fg$ is a
     \emph{real-valued, symmetric, non-degenerate, bilinear, positive definite}
     function on $\fg$.  That is, an inner product on $\fg$ is a function
-    $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$ that satifies the following
+    $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$ that satisfies the following
     properties:
     \\for $x,y,z \in \fg$.
     \begin{enumerate}
         \item $\langle x,y \rangle = \langle y,x \rangle$,
         \item If $\langle x,y \rangle = 0 \quad \forall y \in \fg$
-            then $x = \Vec{0}$,
+            then $x = \zvec$,
         \item
             $\langle x+y,z \rangle = \langle x,z \rangle + \langle y,z \rangle$
             and $\a \langle x,y \rangle = \langle \a x,y \rangle
             = \langle x,\a y \rangle$,
         \item $\langle x,x \rangle \geq 0$
-            and $\langle x,x\rangle = 0 \implies x=\Vec{0}$.
+            and $\langle x,x\rangle = 0 \implies x=\zvec$.
     \end{enumerate}
 \end{definition}
     On example of a metric Lie algebra is the vector space $\RR^3$ with the
@@ -226,14 +231,14 @@ Indeed, if [ , ] is alternating then
 \begin{definition}
     The \emph{center} of a Lie Algebra, $\fg$ is
     \\\[\fz=\{z \in \fg \mid [z,x]
-    = \Vec{0} \; \forall x \in \fg\}.\]
+    = \zvec \; \forall x \in \fg\}.\]
     \\A vector, $z$, of $\fg$ is said to be in the center of $\fg$ if
-    \\\[[x,z] = \Vec{0} \; \forall x \in \fg.\]
+    \\\[[x,z] = \zvec \; \forall x \in \fg.\]
 \end{definition}
 
 \begin{definition}
     A Lie Algebra, $\fg$ is called \emph{one-step nilpotent} if and only if
-    \[[x,y] = \Vec{0} \; \forall x,y \in \fg. \]
+    \[\br{x}{y} = \zvec \; \forall x,y \in \fg. \]
     Which is equivalent to \[\fz = \fg.\]
 \end{definition}
 
@@ -245,7 +250,7 @@ properties.
 \begin{definition}
     A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
     \[
-        [[x,y],z] = \Vec{0} \; \forall x,y,z \in \fg
+        [[x,y],z] = \zvec \; \forall x,y,z \in \fg
         \text{and} \fz \neq \fg
     \]
 \end{definition}
@@ -278,8 +283,8 @@ linear function
     spanned by three vectors $e_1, e_2, z$.
     \\It's Lie Bracket is defined on this basis by:
     \\$[e_1, e_2] = z$
-    \\$[e_1, z] = \Vec{0}$
-    \\$[e_2, z] = \Vec{0}$
+    \\$[e_1, z] = \zvec$
+    \\$[e_2, z] = \zvec$
 \end{example}
 The center and non-center of the Heisenberg Algebra are somewhat distinct
 elements.
@@ -298,6 +303,29 @@ like a line.
 
 %Here's where you define all of the key mathematical objects that you'll
 %be working with, and state ``well-known'' results such as Adams's Theorem.
+
+
+\section{Definition and Examples}
+
+
+\begin{frame}{}
+\vspace{1.35 cm}
+
+ \titlepage
+
+\end{frame}
+
+% \begin{frame}{}
+%
+% \end{frame}
+
+% \begin{frame}{Outline}
+%   \begin{center}
+%     \begin{minipage}[]{.85\textwidth}
+%       \tableofcontents
+%     \end{minipage}
+%   \end{center}
+% \end{frame}
 
 
 \section{Results}
