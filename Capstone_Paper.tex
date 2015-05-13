@@ -230,7 +230,7 @@ properties.
 This means that applying the bracket twice to any arbitrary vectors in $\fg$
 always returns the zero vector.  It also implies the existance of two vectors
 such that one application of the lie bracket returns a non-zero element i.e.
-Abelian Lie Algebra's are not two step nilpotent.
+Abelian Lie Algebras are not two step nilpotent.
 
 Let's look at an example of a Lie Algebra that is neither abelian or two-step
 nilpotent.
@@ -273,17 +273,17 @@ nilpotent.
     \\$[e_2, z] = \zvec$
 \end{example}
 
-$e_1$ and $e_2$ are both in the non-center, $\fv$ because when the Lie bracket
-is applied on both elements together, it returns $z$ instead of the zero
+$e_1$ and $e_2$ are both in the non-center, $\fv$, because when the Lie bracket
+is applied on both elements together it returns $z$ instead of the zero
 vector.  $z$ is clearly in the center because multiplying it by any basis
 vector always returns zero.  In order to show that a vector is in the center
-it is enough to show that its product on all other bases is $\zvec$ which is
+it is enough to show that its product on all other bases is $\zvec$, which is
 the case for $z$.  For a similar reason, all linear combinations of basis
 vectors that are in the center are also in the center.\\
 
 This means that all scalar multiples of $z$ are in $\fz$ and all linear
 combinations of $e_1$ and $e_2$ are in $\fv$. Taking $\fz$ as a vector space
-by itself, it looks like a line, while $\fv$ by itself looks like a plane.
+by itself looks like a line, while $\fv$ by itself looks like a plane.
 Taking the Lie Bracket of two items in the plane returns something in the
 line, while the Lie Bracket of something in the line with anything returns
 the zero vector.
@@ -329,7 +329,7 @@ Let $x, y \in \R^3$; then $x \cdot y = x^Ty$.  The dot product is given by
 It's easy to verify that the dot product is an example of an inner product.
 
 \begin{definition}
-    For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is
+    For any $x \in \fg$, the \emph{adjoint representation} of $\fg$ on itself is
     the function
     \[
         \ad{x}(y) = [x,y] \; \forall y \in \fg
@@ -371,11 +371,11 @@ $$
     L_{n1} & L_{n2} & \cdots & L_{nn}
 \end{pmatrix}
 $$
-So $L_{ij}$ is the output of the Lie Bracket on the ith basis vector with the
-jth basis vector.
+So $L_{ij}$ is the output of the Lie Bracket on the $i^{\text{th}}$ basis vector with the
+$j^{\text{th}}$ basis vector.
 So $L$ is a matrix with vector entries.
 Since $L_{ij}$ is a matrix, we need some way of indexing it.
-We will denote its $k$th entry as $L_{ij}^k$.
+We will denote its $k^{th}$ entry as $L_{ij}^k$.
 \\
 Since $L$ is a matrix of vectors, it can actually be viewed differently (as a
 vector or ``stack'' of matrices) indexed by k.
@@ -530,7 +530,7 @@ vector or ``stack'' of matrices) indexed by k.
         \end{pmatrix}
     $$
     \end{example}
-    The center of $\RR^3$ with the cross product is only $\{\zvec\}$ since all
+    The center of $\RR^3$ with the cross product is only $\{\zvec\}$, since all
     rows of $L$ have a non-zero element.
     \begin{example}
     We can represent the three dimensional Heisenberg Algebra's Lie Bracket as
@@ -557,7 +557,7 @@ vector or ``stack'' of matrices) indexed by k.
                 E_{n1} & E_{n2} & \cdots & E_{nn}
             \end{pmatrix}
     $$
-    Recall that the Lie Bracket returns a vector while the Inner Product
+    Recall that the Lie Bracket returns a vector, while the Inner Product
     returns a scalar. This means that while $L$ was a matrix of vectors,
     $E$ is simply a standard matrix of numbers.
     \\But the inner product has additional properties just as $L$ did.
@@ -565,7 +565,7 @@ vector or ``stack'' of matrices) indexed by k.
     $\inp{x}{x} \ge 0 \ \text{and} \ \inp{x}{x}=0 \implies x=\zvec$
     \\And $\zvec$ cannot be a basis vector because it is linearly dependent with all vectors.
     \\So $\blu{E_{ii}>0}$
-    \\And therefore
+    \\And therefore,
     $$
         E = \begin{pmatrix}
                 E_{11} & E_{12} & \cdots & E_{1n} \\
@@ -582,7 +582,7 @@ vector or ``stack'' of matrices) indexed by k.
     $$
 
     It turns out that $\inp{x}{y}$ can be computed in the same way as
-    $\br{x}{y}$. That is $\inp{x}{y} = x^{T}Ey$
+    $\br{x}{y}$; that is $\inp{x}{y} = x^{T}Ey$
 
     \begin{example}
         Let's examine the Dot Product on $\RR^3$'s matrix representation.
@@ -615,7 +615,7 @@ vector or ``stack'' of matrices) indexed by k.
     Since we will only consider 2-Step Nilpotent Lie Algebras, we can
     ``shrink'' $E$ and $L$ to only include interactions between elements of
     the non-center, $\fv$.  This is because all interactions with the center
-    are trivial. The length of $\fv$ is $n$ making $L$ and $E$ $(n \times n)$.
+    are trivial. The length of $\fv$ is $n$, making $L$ and $E$ $(n \times n)$.
     \smallskip
     \\Suppose $\fz = \text{span} \{ z_1,z_2,\hdots,z_m \}$.
     \\Then for any $z_k$, the j-map $j_{z_k}: \fv \to \fv$ is given by
@@ -625,7 +625,7 @@ vector or ``stack'' of matrices) indexed by k.
         y^T (E J_{z_k}) x		& = & y^T(L^k)^T x
     \end{eqnarray*}
     Since the equation is equal for arbitrary $x$ and $y$ in $\fv$,
-    then the insides must be equal.  i.e. $EJ_{z_k} = (L^k)^T$.
+    the insides must be equal.  i.e. $EJ_{z_k} = (L^k)^T$.
 
     Since det($E$)$\neq 0$ by the non-degeneracy of the inner product, we may
     solve for $J_{z_k}$ to obtain
