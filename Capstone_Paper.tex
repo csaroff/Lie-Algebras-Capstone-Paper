@@ -96,6 +96,7 @@
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\FF}{\mathbb{F}}
 %\newcommand{\ad}[1]{\operatorname{ad}_{#1}}
+\newcommand{\blu}[1]{{\color{blue} #1}}
 
 \makeatletter
 \newcommand{\ad}[1]{\mathop{\operator@font ad}\nolimits_{#1}}
@@ -181,7 +182,7 @@ It follows directly from (1) and (2) that $\bre$ is skew-symmetric;
 \emph{i.e.} $\br{x}{y}$ = $-\br{y}{x}$
 \\By bilinearity, every alternating product is also skew-symmetric, regardless
 of the characteristic of the underlying field.
-\\Indeed, if $\bre$ is alternating then
+\\If $\bre$ is alternating then
     \begin{align}
         \zvec &= \br{x + y}{x + y}
         \\&= \br{x + y}{x} + \br{x + y}{y}
@@ -198,21 +199,114 @@ of the characteristic of the underlying field.
     \end{align}
     As long as $2 \neq 0$, $\bre$ is alternating.
 
+\begin{definition}
+    The \emph{center} of a Lie Algebra, $\fg$ is
+    \\\[\fz=\{z \in \fg \mid [z,x]
+    = \zvec \; \forall x \in \fg\}.\]
+    \\Thus $z$, is in the center of $\fg$ if and only if
+    \\\[[z,x] = \zvec \; \forall x \in \fg.\]
+
+    The \emph{non-center}, $\fv$, is given by $\fv = \fg - \fz$
+\end{definition}
+
+\begin{definition}
+    A Lie Algebra, $\fg$ is called \emph{one-step nilpotent} if and only if
+    \[\br{x}{y} = \zvec \; \forall x,y \in \fg. \]
+    Which is equivalent to \[\fz = \fg.\]
+\end{definition}
+
+It turns out that the center is not only a subspace of $\fg$ and therefore a
+vector space, but it is also a one-step nilpotent Lie Algebra.  This is
+because the Lie Bracket is defined by an identity, and the center inherits its
+properties.
+
+\begin{definition}
+    A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
+    \[
+        [[x,y],z] = \zvec \; \forall x,y,z \in \fg
+        \text{ and } \fz \neq \fg
+    \]
+\end{definition}
+This means that applying the bracket twice to any arbitrary vectors in $\fg$
+always returns the zero vector.  It also implies the existance of two vectors
+such that one application of the lie bracket returns a non-zero element i.e.
+Abelian Lie Algebra's are not two step nilpotent.
+
+Let's look at an example of a Lie Algebra that is neither abelian or two-step
+nilpotent.
+
+\begin{example}
     It turns out that $\RR^3$ with the cross product is a Lie Algebra with the
     cross product as its Lie Bracket.
+    Let $x = (x_1, x_2, x_3)$ and $y = (y_1, y_2, y_3)$ be vectors of $\RR^3$.
+    \\The \emph{cross product} of $x$ with $y$ is defined by
+    $$
+    x \times y = (x_2y_3 - x_3y_2, x_3y_1 - x_1y_3, x_1y_2 - x_2y_1).
+    $$
+    The cross product is alternating:
+    $$
+    x \times x = (x_2x_3 - x_3x_2, x_3x_1 - x_1x_3, x_1x_2 - x_2x_1)
+    = (0, 0, 0)
+    = \zvec
+    $$
+    And skew symmetric:
+    $$
+    x \times y = - y \times x \text{\ \ for\ all\ } x,y \in \R^3.
+    $$
+    And satisfies the Jacobi Identity:
+    \begin{eqnarray*}
+    & & (x \times y) \times z + (y \times z) \times x + (z \times x) \times y
+    \\ & = &
+    (x \cdot z)y - (y \cdot z)x + (y\cdot x)z - (z \cdot x)y +
+    (z \cdot y)x - (x \cdot y)z
+    \\ & = & 0.
+    \end{eqnarray*}
+\end{example}
 
-    \begin{example}
-    \end{example}
 
-    In order to give the Lie Algebra geometry, we will introduce another
-    operator $\langle\cdot,\cdot\rangle$ called the inner product.
+\begin{example}
+    The Heisenberg Algebra, $\fh_3$,  is a specific type of Lie Algebra, that
+    is spanned by three vectors $e_1, e_2, z$.
+    \\It's Lie Bracket is defined on this basis by:
+    \\$[e_1, e_2] = z$
+    \\$[e_1, z] = \zvec$
+    \\$[e_2, z] = \zvec$
+\end{example}
+
+$e_1$ and $e_2$ are both in the non-center, $\fv$ because when the Lie bracket
+is applied on both elements together, it returns $z$ instead of the zero
+vector.  $z$ is clearly in the center because multiplying it by any basis
+vector always returns zero.  In order to show that a vector is in the center
+it is enough to show that its product on all other bases is $\zvec$ which is
+the case for $z$.  For a similar reason, all linear combinations of basis
+vectors that are in the center are also in the center.\\
+
+This means that all scalar multiples of $z$ are in $\fz$ and all linear
+combinations of $e_1$ and $e_2$ are in $\fv$. Taking $\fz$ as a vector space
+by itself, it looks like a line, while $\fv$ by itself looks like a plane.
+Taking the Lie Bracket of two items in the plane returns something in the
+line, while the Lie Bracket of something in the line with anything returns
+the zero vector.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=30mm]{pic.tikz} %input file
+        \label{fig:pic} %label name
+    \caption{\footnotesize The Heisenberg Algebra, $\fh_3$} %caption
+\end{figure}
+
+Now that we have explored some examples of Lie Algebra's let's examine another
+operator on $\fg$.
+
+\pagebreak
+
 \begin{definition}
     An \emph{inner product} on the vector $\fg$ is a
     \emph{real-valued, symmetric, non-degenerate, bilinear, positive definite}
     function on $\fg$.  That is, an inner product on $\fg$ is a function
-    $\langle\cdot,\cdot\rangle:\fg\times\fg\to\RR$ that satisfies the following
-    properties:
-    \\for $x,y,z \in \fg$.
+    $\inpe:\fg\times\fg\to\RR$ that satisfies the
+    following properties:
+    \\for $x,y,z \in \fg$ and $\a \in \RR$.
     \begin{enumerate}
         \item $\langle x,y \rangle = \langle y,x \rangle$,
         \item If $\langle x,y \rangle = 0 \quad \forall y \in \fg$
@@ -224,36 +318,15 @@ of the characteristic of the underlying field.
         \item $\langle x,x \rangle \geq 0$
             and $\langle x,x\rangle = 0 \implies x=\zvec$.
     \end{enumerate}
+    A Lie Algebra with an inner product defined on it is called a
+    \emph{Metric Lie Algebra}
 \end{definition}
-    On example of a metric Lie algebra is the vector space $\RR^3$ with the
-    cross product as its Lie Bracket and the dot product as its inner product.
-
-\begin{definition}
-    The \emph{center} of a Lie Algebra, $\fg$ is
-    \\\[\fz=\{z \in \fg \mid [z,x]
-    = \zvec \; \forall x \in \fg\}.\]
-    \\A vector, $z$, of $\fg$ is said to be in the center of $\fg$ if
-    \\\[[x,z] = \zvec \; \forall x \in \fg.\]
-\end{definition}
-
-\begin{definition}
-    A Lie Algebra, $\fg$ is called \emph{one-step nilpotent} if and only if
-    \[\br{x}{y} = \zvec \; \forall x,y \in \fg. \]
-    Which is equivalent to \[\fz = \fg.\]
-\end{definition}
-
-It turns out that the center is not only a subspace of $\fg$ and therefore a
-vector space, but it is also an one-step nilpotent Lie Algebra.  This is
-because the Lie Bracket is defined by an identity, and the center inherits its
-properties.
-
-\begin{definition}
-    A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
-    \[
-        [[x,y],z] = \zvec \; \forall x,y,z \in \fg
-        \text{and} \fz \neq \fg
-    \]
-\end{definition}
+{\bf Example} The \emph{dot product} on $\R^3$:
+Let $x, y \in \R^3$; then $x \cdot y = x^Ty$.  The dot product is given by
+\[
+    \langle x,y \rangle =  x_1y_1 + x_2y_2 + x_3y_3
+\]
+It's easy to verify that the dot product is an example of an inner product.
 
 \begin{definition}
     For any $x \in \fg$ the \emph{adjoint representation} of $\fg$ on itself is
@@ -263,8 +336,8 @@ properties.
     \]
 \end{definition}
 
-Fixing $x \in \lag{g}$, $\ad{x} = \br{x}{\ }$ becomes a function from $\lag{g}$
-to itself.
+Fixing $x \in \lag{g}$, $\ad{x} = \br{x}{\ }$ becomes a function from
+$\lag{g}$ to itself.
 
 If $\fg$ is two-step nilpotent, then for all $x \in \fg$, $\ad{x}{}$ is a
 linear function
@@ -278,63 +351,341 @@ linear function
     for all $y, z \in \lag{g}$.
 \end{definition}
 
-\begin{example}
-    The Heisenberg Algebra, $\fh$,  is a specific type of Lie Algebra, that is
-    spanned by three vectors $e_1, e_2, z$.
-    \\It's Lie Bracket is defined on this basis by:
-    \\$[e_1, e_2] = z$
-    \\$[e_1, z] = \zvec$
-    \\$[e_2, z] = \zvec$
-\end{example}
-The center and non-center of the Heisenberg Algebra are somewhat distinct
-elements.
-If $\fv$ is the vector space whose basis is $\{e_1, e_2\}$, then
-$\fv$ looks like a plane, while $\fz$ is the span of $z$ and therefore looks
-like a line.
+What this means is that for each vector in the center, there is a map from an
+element in the non-center to another element in the non-center.  Once we
+explore how to represent these operators in Matrix form, it will become clear
+how to untangle the j-map from the above equation.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=30mm]{pic.tikz} %input file
-        \label{fig:pic} %label name
-    \caption{\footnotesize The Heisenberg Algebra, $\fh$} %caption
-\end{figure}
+\section{Lie Operators in Matrix Form}
 
-\pagebreak
+In order to make concise, easy calculations of these algebraic operators, we
+will encode these operators as matrices.
+\\Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+\\Formally, $L_{ij} = [e_i, e_j]$
 
-%Here's where you define all of the key mathematical objects that you'll
-%be working with, and state ``well-known'' results such as Adams's Theorem.
+$$
+ L = \begin{pmatrix}
+    L_{11} & L_{12} & \cdots & L_{1n} \\
+    L_{21} & L_{22} & \cdots & L_{2n} \\
+    \vdots &        & \ddots & \vdots \\
+    L_{n1} & L_{n2} & \cdots & L_{nn}
+\end{pmatrix}
+$$
+So $L_{ij}$ is the output of the Lie Bracket on the ith basis vector with the
+jth basis vector.
+So $L$ is a matrix with vector entries.
+Since $L_{ij}$ is a matrix, we need some way of indexing it.
+We will denote its $k$th entry as $L_{ij}^k$.
+\\
+Since $L$ is a matrix of vectors, it can actually be viewed differently (as a
+vector or ``stack'' of matrices) indexed by k.
+    \setlength{\unitlength}{0.25 cm}
+    \begin{center}
+        \begin{picture}(0,0)
+            \put(-8,0){\line(1,0){16}}
+            \put(-8,0){\line(1,-4){1}}
+            \put(-7,-4){\line(1,0){16}}
+            \put(8,0){\line(1,-4){1}}
+            \put(-8,-2){\line(1,0){0.5}}
+            \put(-8,-2){\line(1,-4){1}}
+            \put(-7,-6){\line(1,0){16}}
+            \put(9,-6){\line(-1,4){0.5}}
+            \put(-8,-4){\line(1,0){0.5}}
+            \put(-8,-4){\line(1,-4){1}}
+            \put(-7,-8){\line(1,0){16}}
+            \put(9,-8){\line(-1,4){0.5}}
+            \put(10,-4){$L^1$}
+            \put(10,-6){$L^2$}
+            \put(10,-8){$L^3$}
+            \put(10.25,-10){$\vdots$}
+            \put(10,-12){$L^m$}
+            \put(-7,-10){$\vdots$}
+            \put(-8,-7.75){$\vdots$}
+            \put(7.75,-10){$\vdots$}
+            \put(1,-10){$\vdots$}
+            \put(-8,-8){\line(1,0){0.75}}
+            \put(-8,-8){\line(1,-4){1}}
+            \put(-7,-12){\line(1,0){16}}
+            \put(9,-12){\line(-1,4){0.9}}
+            \put(-11,-7){$L = $}
+        \end{picture}
+    \end{center}
 
+    \vspace{3.15 cm}
+    A vector of matrices.
+    $$
+    L_{ij} = \begin{pmatrix}
+        L_{ij}^1 \\ L_{ij}^2 \\ \vdots \\ L_{ij}^n
+    \end{pmatrix}.
+    $$
 
-\section{Definition and Examples}
+    By describing how this the basis vectors interact under the Lie Bracket,
+    $L$ fully describes how \emph{all} vectors interact under the Lie Bracket.
+    To demonstrate this, let's examine the two dimensional example.
 
+    \begin{example}
+        Let
+        $$
+         L = \begin{pmatrix}
+                L_{11} & L_{12} \\
+                L_{21} & L_{22}
+             \end{pmatrix},\ \ 
+        $$
+        with $x,y \in \fg$, then
+        \\$x=w_1e_1 + w_2e_2$
+        \\$y=v_1e_1 + v_2e_2$
+        \begin{align*}
+            \text{So} \br{x}{y} &= \br{w_1e_1 + w_2e_2}{v_1e_1 + v_2e_2}
+            \\&= \br{w_1e_1}{v_1e_1 + v_2e_2} + \br{w_2e_2}{v_1e_1 + v_2e_2}
+            \\&= \br{w_1e_1}{v_1e_1} + \br{w_1e_1}{v_2e_2}+ \br{w_2e_2}{v_1e_1} + \br{w_2e_2}{v_2e_2}
+            \\&= w_1v_1\br{e_1}{e_1} + w_1v_2\br{e_1}{e_2}+ w_2v_1\br{e_2}{e_1} + w_2v_2\br{e_2}{e_2}
+            \\&= w_1v_1L_{11} + w_1v_2L_{12} + w_2v_1L_{21}+ w_2v_2L_{22}
+        \end{align*}
+    \end{example}
+    It turns out that $\br{x}{y}$ can be written even more concisely using
+    matrix multiplication.
 
-\begin{frame}{}
-\vspace{1.35 cm}
+    \begin{example}
+        As before, let's examine the two dimensional example.
+\\    Let
+    $$
+     L = \begin{pmatrix}
+            L_{11} & L_{12} \\
+            L_{21} & L_{22}
+         \end{pmatrix},\ \ 
+    $$
+    with
+    $$
+     x = \begin{pmatrix}
+            w_1\\
+            w_2
+         \end{pmatrix},\ \ 
+     y = \begin{pmatrix}
+             v_1\\
+             v_2
+         \end{pmatrix}
+    $$
+    Recall from before that 
+    $$
+    \br{x}{y} = \begin{pmatrix}
+                    w_1v_1L_{11} + w_2v_1L_{21} + w_1v_2L_{12}+w_2v_2L_{22}
+                \end{pmatrix}
+    $$
+    $$
+        = \begin{pmatrix}
+            w_1L_{11} + w_2L_{21}, w_1L_{12}+w_2L_{22}
+        \end{pmatrix}
+        \begin{pmatrix}
+            v_1 \\
+            v_2
+        \end{pmatrix}
+    $$
+    $$
+        = \begin{pmatrix}
+            w_1 w_2
+        \end{pmatrix}
+        \begin{pmatrix}
+            L_{11} & L_{12} \\
+            L_{21} & L_{22}
+        \end{pmatrix}
+        \begin{pmatrix}
+            v_1 \\
+            v_2
+        \end{pmatrix}
+        = x^{T}Ly
+    $$
+    That is
+    $\br{x}{y} = x^TLy$
+    \end{example}
+    And this example extends into higher dimensions.  Recall that the Lie
+    Bracket has some additional properties.
+    \\$[e_i,e_i] = \zvec$
+    \\$[e_i, e_j] = -[e_j, e_i]$
+    \\So
+    $$
+     L = \begin{pmatrix}
+        L_{11} & L_{12} & \cdots & L_{1n} \\
+        L_{21} & L_{22} & \cdots & L_{2n} \\
+        \vdots &        & \ddots & \vdots \\
+        L_{n1} & L_{n2} & \cdots & L_{nn}
+    \end{pmatrix}
+    = \begin{pmatrix}
+               \zvec& L_{12}  & \cdots & L_{1n} \\
+               -L_{12}& \zvec & \cdots & L_{2n} \\
+               \vdots &       & \ddots & \vdots \\
+               -L_{1n}&-L_{2n}& \cdots & \zvec
+        \end{pmatrix}
+    $$
+    \pagebreak
+    \begin{example}
+    Let's look at $L$ as the cross product over $\RR^3$.
+        \\$\br{e_1}{e_2}=e_3$
+        \\$\br{e_1}{e_3}=-e_2$
+        \\$\br{e_2}{e_3}=e_1$
+        $$
+        \begin{pmatrix}
+              \zvec & e_3   & -e_2
+            \\-e_3  & \zvec & e_1
+            \\e_2   & -e_1  & \zvec
+        \end{pmatrix}
+    $$
+    \end{example}
+    The center of $\RR^3$ with the cross product is only $\{\zvec\}$ since all
+    rows of $L$ have a non-zero element.
+    \begin{example}
+    We can represent the three dimensional Heisenberg Algebra's Lie Bracket as
+    well.
+        \\$\br{e_1}{e_2}=e_3$ for bases $e_1, e_2, e_3 \in \h_3$
+        \\And all other brackets zero
+    $$
+    \begin{pmatrix}
+          \zvec & e_3   & \zvec
+        \\-e_3  & \zvec & \zvec
+        \\\zvec & \zvec & \zvec
+    \end{pmatrix}
+    $$
+    \end{example}
+    The center is the span of $\{e_3\}$ because the third row is the only row
+    with entries that are all $\zvec$.
+    \\We can write the inner product as a matrix as well.
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    $$
+        E = \begin{pmatrix}
+                E_{11} & E_{12} & \cdots & E_{1n} \\
+                E_{21} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{n1} & E_{n2} & \cdots & E_{nn}
+            \end{pmatrix}
+    $$
+    Recall that the Lie Bracket returns a vector while the Inner Product
+    returns a scalar. This means that while $L$ was a matrix of vectors,
+    $E$ is simply a standard matrix of numbers.
+    \\But the inner product has additional properties just as $L$ did.
+    \\$\inp{e_i}{e_j} = \inp{e_j}{e_i}$
+    $\inp{x}{x} \ge 0 \ \text{and} \ \inp{x}{x}=0 \implies x=\zvec$
+    \\And $\zvec$ cannot be a basis vector because it is linearly dependent with all vectors.
+    \\So $\blu{E_{ii}>0}$
+    \\And therefore
+    $$
+        E = \begin{pmatrix}
+                E_{11} & E_{12} & \cdots & E_{1n} \\
+                E_{21} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{n1} & E_{n2} & \cdots & E_{nn}
+            \end{pmatrix}
+          = \begin{pmatrix}
+            \blu{E_{11}} & E_{12} & \cdots & E_{1n} \\
+            E_{12} & \blu{E_{22}} & \cdots & E_{2n} \\
+            \vdots & \vdots & \blu{\ddots} & \vdots \\
+            E_{1n} & E_{2n} & \cdots & \blu{E_{nn}}
+            \end{pmatrix}
+    $$
 
- \titlepage
+    It turns out that $\inp{x}{y}$ can be computed in the same way as
+    $\br{x}{y}$. That is $\inp{x}{y} = x^{T}Ey$
 
-\end{frame}
+    \begin{example}
+        Let's examine the Dot Product on $\RR^3$'s matrix representation.
+        \\It's easy to verify based on the definition, but
+        $$
+        \inp{e_i}{e_j}
+        = \begin{cases}
+            1 & i = j \\
+            0 & \text{otherwise}
+        \end{cases}
+        $$
+        $$
+        E = \begin{pmatrix}
+            1 & 0 & 0\\
+            0 & 1 & 0\\
+            0 & 0 & 1\\
+        \end{pmatrix}
+        $$
+    \end{example}
+    The dot product's $E$ is the identity matrix, so
+    $x \cdot y = x^{T}Ey = x^{T}Iy = x^{T}y$
+    \\This is an unsurprising result since we defined dot product this way.
+    \\Remember that 2-step nilpotent Metric Lie Algebras have another operator
+    defined on them.
+    $$
+    \inp{y}{j_z(x)}_\fv = \inp{z}{\br{x}{y}}_\fz.
+    $$
+    And remember also that there is a specific j-map for each element of the
+    center.  We can now use $E$ and $L$ to construct $J$.
+    Since we will only consider 2-Step Nilpotent Lie Algebras, we can
+    ``shrink'' $E$ and $L$ to only include interactions between elements of
+    the non-center, $\fv$.  This is because all interactions with the center
+    are trivial. The length of $\fv$ is $n$ making $L$ and $E$ $(n \times n)$.
+    \smallskip
+    \\Suppose $\fz = \text{span} \{ z_1,z_2,\hdots,z_m \}$.
+    \\Then for any $z_k$, the j-map $j_{z_k}: \fv \to \fv$ is given by
+    \begin{eqnarray*}
+        \inp{y}{j_{z_k}(x)}_\fv	& = & \inp{z_k}{\br{x}{y}}_\fz \\
+        y^T E (J_{z_k}x)		& = & z_k^T (x^TLy)\\
+        y^T (E J_{z_k}) x		& = & y^T(L^k)^T x
+    \end{eqnarray*}
+    Since the equation is equal for arbitrary $x$ and $y$ in $\fv$,
+    then the insides must be equal.  i.e. $EJ_{z_k} = (L^k)^T$.
 
-% \begin{frame}{}
-%
-% \end{frame}
+    Since det($E$)$\neq 0$ by the non-degeneracy of the inner product, we may
+    solve for $J_{z_k}$ to obtain
+    \\
+    $$
+    J_{z_k} = E^{-1}(L^k)^T \in \R^{n \times n}.
+    $$
+    \\
+    If $z = \zeta_1z_1 + \zeta_2z_2 + \cdots + \zeta_mz_m$, where $\zeta_i$
+    are coefficients of the linear combination of $z_i$, then the map $j_z$
+    is represented by the matrix
+    \\
+    $$
+    J_z = \zeta_1J_{z_1} + \zeta_2J_{z_2} + \cdots + \zeta_mJ_{z_m}.
+    $$
+    The $j$-maps of a 2-step nilpotent Lie algebra can be described by a vector of matrices of the same type as $L$.
+    \\
 
-% \begin{frame}{Outline}
-%   \begin{center}
-%     \begin{minipage}[]{.85\textwidth}
-%       \tableofcontents
-%     \end{minipage}
-%   \end{center}
-% \end{frame}
-
-
-\section{Results}
-
+    If we let $J^k = J_{z_k}$, then
+    $$
+    J = \begin{pmatrix}
+        J^1 \\ J^2 \\ \vdots \\ J^m
+    \end{pmatrix}
+    $$
+    is an $m$ dimensional vector of $(n \times n)$ matrices.
+    \\
+    Then for $z = (\zeta_1,\zeta_2,\hdots,\zeta_m)^T \in \fz$, the map $j_z$
+    is represented by
+    \\
+    $$
+    J_z = z^TJ.
+    $$
+    \begin{example}
+        Consider the Heisenberg algebra $\fh_3$. Restricting $L$ to
+        $\fv$ and
+        letting $E$ be the dot product on $\fv$, we obtain
+        $$
+        E = \begin{pmatrix}
+            1 & 0 \\ 0 & 1
+        \end{pmatrix},\ \ \text{and}\ \ L = \begin{pmatrix}
+            0 & 1 \\ -1 & 0
+        \end{pmatrix}.
+        $$
+        The $j$-map $j_{e_3} :\fv \to \fv$ is then given by 
+        $$
+        J = E^{-1}L^T = \begin{pmatrix}
+            0 & -1 \\ 1 & 0
+        \end{pmatrix}.
+        $$
+    \end{example}
 \section{Conclusion}
-
-Wrap it all up in this section. You can talk about what you learned, what
-you found most interesting, and directions for ``future work'' or an
-alternative approach that may yield better results.
+    We can now represent an arbitrary Lie Algebra's operators in matrix form
+    and use simple matrix multiplication to apply these operators on
+    arbitrary vectors.  We can now easily compute the j-maps for a given $L$
+    and $E$.  Future work may include
+    \begin{enumerate}
+        \item Finding the structural properties of $J$
+        \item Computing $E$ given $L$ and $J$
+        \item Figuring out for which $J$'s, $E$ can be computed.
+    \end{enumerate}
 
 \begin{thebibliography}{99}
 \bibitem{CP4}

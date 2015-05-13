@@ -6,3 +6,4 @@ clean:
 	- rm *.aux
 	- rm *.out
 	- rm *.dvi
+	- rm *.log

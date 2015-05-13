@@ -1,0 +1,960 @@
+	% An Overview of Lie Algebra's
+% Adapted from Justin Ryan's "Examples of Lie Algebras"
+% Chaskin Saroff
+% last changed: 29 April 2015
+% feel free to make any improvements/changes you wish
+
+\documentclass[9 pt]{beamer}
+\usepackage{etex}
+\reserveinserts{28}
+% \usepackage{default}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,epsfig,pgf} % ,graphicx
+\usepackage{graphicx}
+
+% choose your theme
+ \usetheme{Warsaw} % Warsaw, Copenhagen, Darmstadt, Madrid, Singapore, etc...
+
+% custom SUNY Oswego color scheme
+\definecolor{oswego}{rgb}{0.15,0.4,0.15}
+\setbeamercolor*{palette primary}{fg=white, bg=oswego}
+\setbeamercolor*{palette sidebar primary}{fg=black, bg=oswego}
+\setbeamercolor{block title}{bg=black,fg=white} % bg=background, fg= foreground
+\setbeamercolor{block body}{bg=oswego,fg=black} % bg=background, fg= foreground
+\setbeamercolor{alerted text}{fg=oswego}
+\usecolortheme[named={oswego}]{structure}
+\def\today{\number\day\space\ifcase\month\or
+   January\or February\or March\or April\or May\or June\or
+   July\or August\or September\or October\or November\or December\fi
+   \space\number\year}
+
+% something I found to get alert blocks in the Oswego color scheme
+\newenvironment<>{lakeblock}[1]{%
+  \begin{actionenv}#2%
+      \def\insertblocktitle{#1}%
+      \par%
+      \mode<presentation>{%
+\setbeamercolor{block title}{fg=white,bg=black}
+       \setbeamercolor{block body}{fg=white,bg=oswego}
+            }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+% Oswego State logo on every page
+%\logo{\pgfputat{\pgfxy(-10.5,0.35)}{\pgfbox[center,center]
+%{\includegraphics[height=1.35cm]{oswego_logo_horiz_grn}}}}
+
+% commutative diagrams with XY-pic
+\usepackage[all]{xy}
+\SelectTips{cm}{}
+% make \mathscr, TeX \cal, and Euler script *all* available
+% (notice the new command names to avoid overlap and/or confusion)
+\usepackage{mathrsfs}
+\let\rscr=\mathscr % use \rscr{} for Ralph Smith fancy script
+\let\mathscr=\relax
+\let\mcal=\mathcal % use \mcal{} for TeX \cal script
+\usepackage{eucal}
+\let\escr=\mathcal % use \escr{} for Euler script
+\let\mathcal=\relax
+% a better "bar" thanks to Donald Arsenau -- see \pbar infra
+\usepackage{accents}
+
+% title page information
+\title[Encoding the Bracket - An Overview of Lie Agebra's]{Encoding the Bracket - An Overview of Lie Algebras}
+\author[A.\, Jansing \,C.\, Saroff]{Alexander Jansing,  Chaskin Saroff}
+\institute[SUNY Oswego]{Oswego State University\\ Department of Mathematics}
+\date{\today}
+
+% new math commands
+\newcommand{\at}[1]{\emph{\alert{#1}}}
+\newcommand{\ad}[1]{\text{ad}_{#1}}
+\newcommand{\add}[1]{\ad{#1}^\dagger}
+\newcommand{\br}[2]{\left[ #1, #2 \right]}
+\newcommand{\bre}{\br{\ }{\,}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\h}{\lag{h}}
+\newcommand{\inp}[2]{\langle #1, #2 \rangle}
+\newcommand{\inpe}{\inp{\ }{\,}}
+\newcommand{\lag}[1]{\mfrak{#1}}
+\newcommand{\mfrak}[1]{\mathfrak{#1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\a}{\alpha}
+\newcommand{\surj}{\rightarrow\kern-.82em\rightarrow}
+\newcommand{\tQ}{\widetilde{Q}}
+\renewcommand{\v}{\lal{v}}
+\newcommand{\z}{\lal{z}}
+\newcommand{\V}{\mathfrak{g}}
+\newcommand{\fg}{\mathfrak{g}}
+\newcommand{\fz}{\mathfrak{z}}
+\newcommand{\fv}{\mathfrak{v}}
+\newcommand{\fh}{\mathfrak{h}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\zvec}{\mathbf{0}}
+\newcommand{\lal}[1]{\mathfrak{#1}}
+\newcommand{\lan}{\lal{n}}
+\newcommand{\lav}{\lal{v}}
+\newcommand{\laz}{\lal{z}}
+
+
+% colored text commands
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\grn}[1]{{\color{green} #1}}
+\newcommand{\blu}[1]{{\color{blue} #1}}
+\newcommand{\ylw}[1]{{\color{yellow} #1}}
+\newcommand{\mgn}[1]{{\color{magenta} #1}}
+\newcommand{\cyn}[1]{{\color{cyan} #1}}
+
+%Stuff from Justin's example
+%\renewcommand{\a}{\vect{a}}
+%\newcommand{\abs}[1]{\vert #1 \vert}
+%\renewcommand{\b}{\vect{b}}
+%\newcommand{\bve}{\pbar{\ve}}
+%\newcommand{\dps}{\displaystyle}
+%\newcommand{\ds}{\oplus}
+%\newcommand{\name}{{\bf Name:}\underline{\hspace{3 in}}}
+%\newcommand{\nin}{\noindent}
+%\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+%\newcommand{\pg}[1]{\paragraph{#1}}
+%\newcommand{\ph}[1]{\phantom{#1}}
+%\renewcommand{\span}[1]{\textrm{span}\left\{ #1 \right\}}
+\renewcommand{\t}{\texttt{t}}
+\newcommand{\T}{\textsc{T}}
+\renewcommand{\u}{\vect{u}}
+\renewcommand{\v}{\vect{v}}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\vc}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+% tiks packages
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{tikzscale}
+\usepackage{filecontents}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage{wrapfig}
+
+\begin{filecontents*}{heis.tikz}
+    \begin{tikzpicture}
+        \draw (-4,4) -- (1,2);
+        \draw (1, 2) -- (4,4);
+        \draw (-1,6) -- (4,4);
+        \draw (-1,6) -- (-4,4);
+        \draw [-] (0,8) -- (0,4);
+        \draw [-] (0,2.4) -- (0,0);
+        %\draw [dashed] (4,0) -- (4,3);
+        \node [right] at (0, 8) {$\fz$};
+        \node [below] at (4,4) {$\fv$};
+    \end{tikzpicture}
+\end{filecontents*}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\newcommand{\DrawBox}[1][]{%
+    \tikz[overlay,remember picture]{
+    \draw[red,#1]
+      ($(left)+(-0.2em,0.9em)$) rectangle
+      ($(right)+(0.2em,-0.3em)$);}
+}
+
+\NewDocumentCommand{\highlight}{O{blue!40} m m}{%
+    \draw[mycolor=#1] (#2.north west)rectangle (#3.south east);
+}
+
+\NewDocumentCommand{\fhighlight}{O{blue!40} m m}{%
+    \draw[myfillcolor=#1] (#2.north west)rectangle (#3.south east);
+}
+
+\begin{document}
+
+\section{Definition and Examples}
+
+
+\begin{frame}{}
+\vspace{1.35 cm}
+
+ \titlepage
+
+\includegraphics[height=1.35cm]{oswego_logo_horiz_grn}
+
+\end{frame}
+
+% \begin{frame}{}
+%
+% \end{frame}
+
+% \begin{frame}{Outline}
+%   \begin{center}
+%     \begin{minipage}[]{.85\textwidth}
+%       \tableofcontents
+%     \end{minipage}
+%   \end{center}
+% \end{frame}
+
+\subsection{Definition}
+
+\note{So the Lie Algebra is a \emph{vector space}. Does anyone recognize
+a similar operator, maybe from calulus or physics, that takes two vectors
+and produces a vector?}
+\begin{frame}{Definition}
+A \emph{\alert{Lie Algebra}} is a (finite-dimensional) vector space $\fg$
+together with a bilinear multiplication $\bre : \fg \times \fg \to \fg$
+that satisfies three properties: \pause
+
+\smallskip
+
+\begin{enumerate}
+\item $\br{x}{x} = 0$ for all $x \in \fg$,
+\pause
+
+\
+
+\item $\br{\br{x}{y}}{z} + \br{\br{y}{z}}{x} + \br{\br{z}{x}}{y} = 0$ for
+all $x, y, z \in \fg$.
+and
+\pause
+
+\
+
+\item  $\br{x+y}{z} = \br{x}{z}+\br{y}{z}\quad \text{and} \quad 
+    \br{\a x}{y}=\br{x}{\a    y}=\a\br{x}{y}
+    \ \forall x,y,z \in \fg \ \text{and} \ \a \in \RR$ 
+\end{enumerate}
+\pause
+
+\
+
+Property 1 is known as \emph{\alert{alternating}}, property 2 is known
+as the \emph{\alert{Jacobi Identity}} and property 3 describes
+\emph{\alert{bilinearity}}.
+\pause
+
+\
+
+Property 1 and 3 imply another property called \emph{\alert{skew symmetry}}\,:
+
+\smallskip
+
+\begin{enumerate}
+\item $\br{x}{y} = -\br{y}{x}$ for all $x, y \in \fg$. 
+\end{enumerate}
+\pause 
+
+\
+
+The product $\bre$ is known as a \emph{\alert{Lie bracket}} on $\fg$.
+
+\end{frame}
+
+\subsection{Examples}
+
+\begin{frame}{skew-symmetry}
+By bilinearity, every alternating product is also skew-symmetric.
+Indeed, if [ , ] is alternating then
+\pause
+        \begin{align}
+            0 &= [x + y, x + y] 
+            \\&= [x + y, x] + [x + y, y]
+            \\&= [x,x] + [y, x] + [x + y, y]
+            \\&= [x,x] + [y, x] + [x, y] + [y, y]
+            \\0&=         [x, y] + [y, x]
+            \\\implies [x,y] &= -[y,x]
+        \end{align}
+\pause
+Conversely, if $\bre$ is skew-symmetric, then
+$\br{x}{x}+\br{x}{x}$ = 0 implies that 2[x,x] = 0. Now we see that this implies [x,x] = 0
+so long as our field is not of characteristic 2, for in those spaces 2 = 0 and we
+can deduce nothing about [x,x].
+\end{frame}
+
+\begin{frame}{The Center}
+    %\begin{definition}
+        The \emph{center} of a Lie Algebra, $\fg$ is
+        \pause
+        \\\[\fz=\{z \in \fg \mid [z,x]
+        = \zvec \; \forall x \in \fg\}.\]
+        \pause
+        \\Thus $z$, is in the center of $\fg$ if and only if
+        \\\[[z,x] = \zvec \; \forall x \in \fg.\]
+
+        The \emph{non-center}, $\fv$, is given by $\fv = \fg - \fz$
+    %\end{definition}
+\end{frame}
+
+\begin{frame}{A First Example: One-Step Nilpotent Lie Algebras}
+Let $\fg$ be any vector space, and define
+$$
+\br{x}{y} = 0 \text{\ \ for\ all\ } x,y \in \fg.
+$$
+\pause
+
+\
+
+Clearly $\bre$ is alternating:
+$$
+\br{x}{x} = 0 \text{\ \ for\ all\ } x \in \fg.
+$$
+\pause
+
+\
+
+And the Jacobi Identity is trivial:
+
+\pause
+\begin{eqnarray*}
+\br{\br{x}{y}}{z} + \br{\br{y}{z}}{x} + \br{\br{z}{x}}{y} & = & 
+	\br{0}{z} + \br{0}{x} + \br{0}{y} \\
+	& = & 0 + 0 + 0 = 0.
+\end{eqnarray*}
+\pause
+\
+This Algebra is called \emph{Abelian} or \emph{One-Step Nilpotent}.
+\pause
+
+\end{frame}
+
+\begin{frame}{Two-Step Nilpotent}
+
+    A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
+    \[
+        [[x,y],z] = \zvec \; \forall x,y,z \in \fg
+        \ \text{and} \ \fz \neq \fg
+    \]
+    \pause
+    \begin{enumerate}
+        \item Applying the bracket twice to any arbitrary set of three vectors in the Algebra, always returns $\zvec$.
+        \pause
+        \item Applying the bracket once to any arbitrary set of two vectors does not always return $\zvec$.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{$\R^3$ as a non-Abelian Lie Algebra}
+Let $x = (x_1, x_2, x_3)$ and $y = (y_1, y_2, y_3)$. The \at{cross product}
+of $x$ with $y$ is defined by
+$$
+x \times y = (x_2y_3 - x_3y_2, x_3y_1 - x_1y_3, x_1y_2 - x_2y_1).
+$$
+\pause
+
+The cross product is skew symmetric:
+$$
+x \times y = - y \times x \text{\ \ for\ all\ } x,y \in \R^3.
+$$
+\pause
+
+Using some identities from Calc III, we can show that the cross product satisfies
+the Jacobi Identity:
+\pause
+\begin{eqnarray*}
+& & \hspace{-1.5 cm} (x \times y) \times z + (y \times z) \times x + (z \times x) \times y
+\pause
+\\ & = & 
+\red{(x \cdot z)y} - \blu{(y \cdot z)x} + \grn{(y\cdot x)z} - \red{(z \cdot x)y} +
+\blu{(z \cdot y)x} - \grn{(x \cdot y)z}
+\pause
+\\ & = & 0.
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{$\h_3$ : The Heisenberg Algebra}
+We can construct another example from $\RR^3$ by defining a different Lie Bracket.
+Consider a 3-dimensional vector space with basis vectors $x, y, z$.
+\pause
+Define a Lie bracket on this space by
+$$
+\br{x}{y} = z,
+$$
+with all other brackets equal to 0.
+\pause
+This is called the \at{Heisenberg Algebra}, and is denoted by $\lag{h}_3$.
+\pause
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=30mm]{heis.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The Heisenberg Algebra, $\fh_3$} %caption
+\end{figure}
+
+\pause
+
+Can anyone tell me if the Heisenberg Algebra is one-step nilpotent,
+two-step nilpotent, neither, or both?
+
+\end{frame}
+
+\section{Defining the Lie Algebra}
+
+\subsection{Inner Products}
+
+\begin{frame}{Inner Products}
+An \at{inner product} on a vector space $\fg$ is a non-degenerate, symmetric,
+bilinear, postive definite function $\inpe :\fg \times \fg \to \R$.
+\pause
+\begin{enumerate}
+\item If $\inp{x}{y} = 0$ for all $y \in \fg$, then $x$ must be $0$;
+\pause
+
+\item $\inp{x}{y} = \inp{y}{x}$ for all $x,y \in \fg$;
+\pause
+
+\item $\inp{ax + by}{z} = a\inp{x}{z} + b\inp{y}{z}$ for all $x,y,z \in \fg$, $a, b, \in \R$.
+\item $\inp{x}{x} \ge 0 \ \forall x \in \fg$ and $\inp{x}{x}=0 \implies x=\zvec$
+\end{enumerate}
+\pause
+
+A Lie Algebra with an inner product is called a \emph{Metric Lie Algebra}
+\pause
+
+\
+
+{\bf Example} The \at{dot product} on $\R^3$:
+\pause
+Let $x, y \in \R^3$; then $x \cdot y = x^Ty$.  The dot product is given by
+\pause
+\[
+    \langle x,y \rangle =  x_1y_1 + x_2y_2 + x_3y_3
+\]
+
+\
+
+\end{frame}
+
+\subsection{Encoding Geometry via Algebra}
+
+\begin{frame}{$j$-maps}
+    In order to seperate the interaction between the center and the non-center
+    of a two-step nilpotent lie algebra, we can define a map, $j_z:\fv \to \fv$.
+    \pause
+    \\$j_z$ is defined by the equation
+    $$
+    \inp{\br{x}{y}}{z} = \inp{y}{j_zx}
+    $$
+    \pause
+
+    \
+
+    The $j$-maps are extremely useful because they simultaneously encode information
+    about the algebraic structure and geometric structure of the Lie algebra $\lag{g}$.
+    \pause
+
+    \
+
+    This makes the computation of many seemingly complicated objects
+    ``simple" calculations in linear algebra!
+\end{frame}
+
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+    In order to do math with Lie Algebras on a computer,
+    we would like to represent the Lie Bracket in a matrix form.
+    \pause
+    Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+    \\Formally, $L_{ij} = [e_i, e_j]$
+    \pause
+
+    $$
+     L = \begin{pmatrix}
+        L_{11} & L_{12} & \cdots & L_{1n} \\
+        L_{21} & L_{22} & \cdots & L_{2n} \\
+        \vdots &        & \ddots & \vdots \\
+        L_{n1} & L_{n2} & \cdots & L_{nn}
+    \end{pmatrix}
+    $$
+    \pause
+    We will denote the $k$th entry of $L_{ij}$ as $L_{ij}^k$.
+\pause
+\\$[e_i,e_i] = \zvec$
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+Recall that the Lie Bracket is a matrix of vectors.\\
+\pause
+\begin{figure}[]
+    \centering
+    \includegraphics[width=50mm]{Lie_MX_Flat.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The Lie Bracket as a Matrix, $L$} %caption
+\end{figure}
+
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+Recall that the Lie Bracket is a matrix of vectors.\\
+\begin{figure}[]
+    \centering
+    \includegraphics[width=50mm]{Lie_MX_Flat_ij.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The Lie Bracket as a Matrix, $L$} %caption
+\end{figure}
+
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+Recall that the Lie Bracket is a matrix of vectors.\\
+\begin{figure}[]
+    \centering
+    \includegraphics[width=50mm]{Lie_MX_Vector.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The Lie Bracket as a Matrix, $L$} %caption
+\end{figure}
+\end{frame}
+\begin{frame}{The Lie Bracket as a vector of matrices}
+    It can also be represented by a ``stack'' of matrices
+    \setlength{\unitlength}{0.25 cm}
+    \begin{center}
+        \begin{picture}(0,0)
+            \put(-8,0){\line(1,0){16}}
+            \put(-8,0){\line(1,-4){1}}
+            \put(-7,-4){\line(1,0){16}}
+            \put(8,0){\line(1,-4){1}}
+            \put(-8,-2){\line(1,0){0.5}}
+            \put(-8,-2){\line(1,-4){1}}
+            \put(-7,-6){\line(1,0){16}}
+            \put(9,-6){\line(-1,4){0.5}}
+            \put(-8,-4){\line(1,0){0.5}}
+            \put(-8,-4){\line(1,-4){1}}
+            \put(-7,-8){\line(1,0){16}}
+            \put(9,-8){\line(-1,4){0.5}}
+            \put(10,-4){$L^1$}
+            \put(10,-6){$L^2$}
+            \put(10,-8){$L^3$}
+            \put(10.25,-10){$\vdots$}
+            \put(10,-12){$L^m$}
+            \put(-7,-10){$\vdots$}
+            \put(-8,-7.75){$\vdots$}
+            \put(7.75,-10){$\vdots$}
+            \put(1,-10){$\vdots$}
+            \put(-8,-8){\line(1,0){0.75}}
+            \put(-8,-8){\line(1,-4){1}}
+            \put(-7,-12){\line(1,0){16}}
+            \put(9,-12){\line(-1,4){0.9}}
+            \put(-11,-7){$L = $}
+        \end{picture}
+    \end{center}
+
+    \vspace{3.15 cm}
+    A vector of matrices.
+    $$
+    L_{ij} = \begin{pmatrix}
+        L_{ij}^1 \\ L_{ij}^2 \\ \vdots \\ L_{ij}^m
+    \end{pmatrix}.
+    $$
+\end{frame}
+\begin{frame}
+    $$
+    L_{ij} = \begin{pmatrix}
+        L_{ij}^1 \\ L_{ij}^2 \\ \vdots \\ L_{ij}^m
+    \end{pmatrix}.
+    $$
+    These $L_{ij}$ can then be arranged in an $n \times n$ matrix
+    $$
+    L = (L_{ij}) = \begin{pmatrix}
+        L_{11} & L_{12} & \cdots & L_{1n} \\
+        L_{21} & L_{22} & \cdots & L_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        L_{n1} & L_{n2} & \cdots & L_{nn}
+    \end{pmatrix}.
+    $$
+
+\end{frame}
+\begin{frame}
+    It's nice to see that we can \emph{encode} the bracket into a matrix
+    representation, but how can we use that encoding as the Lie Bracket
+    ``map''?
+    \pause
+    \\Notice that we can retrieve information about the bases.
+    \pause
+    \\$\br{e_1}{e_2} = L_{12}$
+    \pause
+    $$
+     L = \begin{pmatrix}
+         L_{11}& \tikzmark{left}L_{12}\tikzmark{right} & \cdots & L_{1n} \\
+            \DrawBox[thick]
+            L_{21}& L_{22} & \cdots & L_{2n} \\
+               \vdots &       & \ddots & \vdots \\
+               L_{n1}&L_{n2}& \cdots & L_{nn}
+        \end{pmatrix}
+    $$
+    \pause
+    \\So it will be enough find a way to write all Lie Brackets as a linear
+    combination of basis brackets.
+\end{frame}
+
+\begin{frame}{Lie Bracket as Linear Combination of Bases}
+    %I had to use uncover here instead of pause because align ``does wicked
+    %things too beamer''
+    \uncover<00->{We can write $\br{x}{y}$ as a linear combination of their component vectors'
+brackets.}
+    \uncover<01->{\\Let's look at an example of a 2 dimensional space}
+    \uncover<02->{\\Let $x,y \in \fg$ with}
+    \uncover<03->{\\$x=w_1e_1 + w_2e_2$}
+    \uncover<04->{\\$y=v_1e_1 + v_2e_2$}
+    \begin{align*}
+        \uncover<05->{\text{So} \br{x}{y} &= \br{w_1e_1 + w_2e_2}{v_1e_1 + v_2e_2}}
+        \uncover<06->{\\&= \br{w_1e_1}{v_1e_1 + v_2e_2} + \br{w_2e_2}{v_1e_1 + v_2e_2}}
+        \uncover<07->{\\&= \br{w_1e_1}{v_1e_1} + \br{w_1e_1}{v_2e_2}+ \br{w_2e_2}{v_1e_1} + \br{w_2e_2}{v_2e_2}}
+        \uncover<08->{\\&= w_1v_1\br{e_1}{e_1} + w_1v_2\br{e_1}{e_2}+ w_2v_1\br{e_2}{e_1} + w_2v_2\br{e_2}{e_2}}
+        \uncover<09->{\\&= w_1v_1L_{11} + w_1v_2L_{12} + w_2v_1L_{21}+ w_2v_2L_{22}}
+    \end{align*}
+    \uncover<10->{This means that the Lie Bracket is fully described by the matrix, L}
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+    Let's take another look at $L$
+    \pause
+    \\Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+    \\Formally, $L_{ij} = [e_i, e_j]$
+    \pause
+
+    $$
+     L = \begin{pmatrix}
+        L_{11} & L_{12} & \cdots & L_{1n} \\
+        L_{21} & L_{22} & \cdots & L_{2n} \\
+        \vdots &        & \ddots & \vdots \\
+        L_{n1} & L_{n2} & \cdots & L_{nn}
+    \end{pmatrix}
+    $$
+\pause
+What is special about $[e_i,e_i]$?
+\pause
+\\$[e_i,e_i] = \zvec$
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+    Let's take another look at $L$
+    \\Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+    \\Formally, $L_{ij} = [e_i, e_j]$
+    $$
+     L = \begin{pmatrix}
+        \zvec& L_{12} & \cdots & L_{1n} \\
+        L_{21} & \zvec& \cdots & L_{2n} \\
+        \vdots &        & \ddots & \vdots \\
+        L_{n1} & L_{n2} & \cdots & \zvec
+    \end{pmatrix}
+    $$
+\pause
+Given $[e_i, e_j]$, what do we know about $[e_j, e_i]$?
+\pause
+\\$[e_i, e_j] = -[e_j, e_i]$
+\end{frame}
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+    Let's take another look at $L$
+    \\Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+    \\Formally, $L_{ij} = [e_i, e_j]$
+    $$
+     L = \begin{pmatrix}
+               \zvec& L_{12}  & \cdots & L_{1n} \\
+               -L_{12}& \zvec & \cdots & L_{2n} \\
+               \vdots &       & \ddots & \vdots \\
+               -L_{1n}&-L_{2n}& \cdots & \zvec
+        \end{pmatrix}
+    $$
+    \\
+    Consider the map $\br{e_1}{\,}: \fg \to \fg$.
+    \\Can anyone see the matrix representation of $\br{e_1}{\,}$?
+\end{frame}
+
+\begin{frame}{The Lie Bracket as a Matrix with Vector entries}
+    Let's take another look at $L$
+    \\Consider the Lie Bracket, with bases $e_1, e_2, \dots, e_n$
+    \\Formally, $L_{ij} = [e_i, e_j]$
+    $$
+     L = \begin{pmatrix}
+         \tikzmark{left}\zvec& L_{12}  & \cdots & L_{1n} \tikzmark{right}\\
+            \DrawBox[thick]
+               -L_{12}& \zvec & \cdots & L_{2n} \\
+               \vdots &       & \ddots & \vdots \\
+               -L_{1n}&-L_{2n}& \cdots & \zvec
+        \end{pmatrix}
+    $$
+    \\
+    Consider the map $\br{e_1}{\,}: \fg \to \fg$.
+    \\Can anyone see the matrix representation of $\br{e_1}{\,}$?
+\end{frame}
+\begin{frame}{Generalizing the Lie Bracket}
+    As before, we'll investigate the 2 dimensional example.
+    \pause
+    Let
+    $$
+     L = \begin{pmatrix}
+            L_{11} & L_{12} \\
+            L_{21} & L_{22}
+         \end{pmatrix},\ \ 
+    $$
+    \pause
+    with
+    $$
+     x = \begin{pmatrix}
+            w_1\\
+            w_2
+         \end{pmatrix},\ \ 
+     y = \begin{pmatrix}
+             v_1\\
+             v_2
+         \end{pmatrix}
+    $$
+    \pause
+    $$
+    x^{T}L = 
+    \begin{pmatrix}
+        w_1 w_2
+    \end{pmatrix}
+     \begin{pmatrix}
+            L_{11} & L_{12} \\
+            L_{21} & L_{22}
+     \end{pmatrix}
+     =
+     \begin{pmatrix}
+         w_1L_{11} + w_2L_{12}, w_1L_{12}+w_2L_{22}
+     \end{pmatrix}
+    $$
+    \pause
+    $$
+        (x^TL)y = 
+        \begin{pmatrix}
+            w_1L_{11} + w_2L_{12}, w_1L_{12}+w_2L_{22}
+        \end{pmatrix}
+        \begin{pmatrix}
+            v_1 \\
+            v_2
+        \end{pmatrix}
+    $$
+    \pause
+    $$
+    =   \begin{pmatrix}
+            w_1v_1L_{11} + w_2v_1L_{12} + w_1v_2L_{12}+w_2v_2L_{22}
+        \end{pmatrix}
+    $$
+    \pause
+    That is
+    $\br{x}{y} = x^TLy$
+\end{frame}
+\begin{frame}{Example Abelian $\RR^3$}
+    What does Abelian $\RR^3$ look like in this form?
+    \pause
+    \\Recall that a Lie Algebra is Abelian if
+    \pause
+    \\$\br{x}{y} = \zvec \ \forall x,y \in \RR^3$
+    \pause
+    $$
+    \begin{pmatrix}
+            \zvec & \zvec & \zvec
+          \\\zvec & \zvec & \zvec
+          \\\zvec & \zvec & \zvec
+    \end{pmatrix}
+    $$
+    \pause
+    What is the center of Abelian $\RR^3$
+\end{frame}
+\begin{frame}{Examples of Cross Product over $\RR^3$}
+    What does the the cross product on $\RR^3$ look like in this form?
+    \pause
+    \\$\br{e_1}{e_2}=e_3$
+    \\$\br{e_1}{e_3}=-e_2$
+    \\$\br{e_2}{e_3}=e_1$
+    \pause
+    $$
+    \begin{pmatrix}
+          \zvec & e_3   & -e_2
+        \\-e_3  & \zvec & e_1
+        \\e_2   & -e_1  & \zvec
+    \end{pmatrix}
+    $$
+    \pause
+    What is the center of $\RR^3$ with the cross product?
+\end{frame}
+\begin{frame}{$\h_3$'s Lie Bracket}
+    How could the three dimensional Heisenberg Algebra be represented?
+    \pause
+        $\br{e_1}{e_2}=e_3$ for bases $e_1, e_2, e_3 \in \h_3$
+        \\And all other brackets zero
+    \pause
+    $$
+    \begin{pmatrix}
+          \zvec & e_3   & \zvec
+        \\-e_3  & \zvec & \zvec
+        \\\zvec & \zvec & \zvec
+    \end{pmatrix}
+    $$
+    \pause
+    \\What is the center of $\h_3$?
+    \pause
+    \\The center is the span of $\{e_3\}$.
+\end{frame}
+\begin{frame}{Inner Product as a Matrix}
+    The Inner Product can be represented by a matrix very similarly to the Lie Bracket.
+    \pause
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    \pause
+    $$
+        E = \begin{pmatrix}
+                E_{11} & E_{12} & \cdots & E_{1n} \\
+                E_{21} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{n1} & E_{n2} & \cdots & E_{nn}
+            \end{pmatrix}
+    $$
+    \pause
+    Recall that $\inp{e_i}{e_j} = \inp{e_j}{e_i}$
+\end{frame}
+%Transition from previous frame showing that e_12 = e_21
+\begin{frame}{Inner Product as a Matrix}
+    The Inner Product can be represented by a matrix very similarly to the Lie Bracket.
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    $$
+        E = \begin{pmatrix}
+            E_{11} & \tikzmark{left}E_{12}\tikzmark{right} & \cdots & E_{1n} \\
+            \DrawBox[thick]
+            \tikzmark{left}E_{21}\tikzmark{right} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{n1} & E_{n2} & \cdots & E_{nn}
+            \end{pmatrix}
+            \DrawBox[thick]
+    $$
+\end{frame}
+\begin{frame}{Inner Product as a Matrix}
+    The Inner Product can be represented by a matrix very similarly to the Lie Bracket.
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    $$
+        E = \begin{pmatrix}
+            E_{11} & E_{12} & \cdots & E_{1n} \\
+            E_{12} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{1n} & E_{2n} & \cdots & E_{nn}
+            \end{pmatrix}
+    $$
+\end{frame}
+\begin{frame}{Inner Product as a Matrix}
+    The Inner Product can be represented by a matrix very similarly to the Lie Bracket.
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    $$
+        E = \begin{pmatrix}
+            E_{11} & E_{12} & \cdots & E_{1n} \\
+            E_{12} & E_{22} & \cdots & E_{2n} \\
+                \vdots & \vdots & \ddots & \vdots \\
+                E_{1n} & E_{2n} & \cdots & E_{nn}
+            \end{pmatrix}
+    $$
+    \pause
+    Recall also that the inner product has additional properties.
+    \pause
+    \\Postive Definite: $\inp{x}{x} \ge 0 \ \text{and} \ \inp{x}{x}=0 \implies x=\zvec$
+    \\And $\zvec$ canot be a basis vector because it is linearly dependent with all vectors.
+    \\So $\blu{e_{ii}>0}$
+\end{frame}
+\begin{frame}{Inner Product as a Matrix}
+    The Inner Product can be represented by a matrix very similarly to the Lie Bracket.
+    \\$\inp{e_i}{e_j} = E_{ij}$
+    $$
+        E = \begin{pmatrix}
+            \blu{E_{11}} & E_{12} & \cdots & E_{1n} \\
+            E_{12} & \blu{E_{22}} & \cdots & E_{2n} \\
+            \vdots & \vdots & \blu{\ddots} & \vdots \\
+            E_{1n} & E_{2n} & \cdots & \blu{E_{nn}}
+            \end{pmatrix}
+    $$
+    Recall also that the inner product has additional properties.
+    \\Postive Definite: $\inp{x}{x} \ge 0 \ \text{and} \ \inp{x}{x}=0 \implies x=\zvec$
+    \\And $\zvec$ canot be a basis vector because it is linearly dependent with all vectors.
+    \\So $\blu{e_{ii}>0}$
+\end{frame}
+\begin{frame}{Dot Product on $\RR^3$}
+    The Dot Product can be represented in this way.
+    \pause
+    \\$\inp{e_i}{e_j} = 0$
+    \pause
+    \\$\inp{e_i}{e_i} = 1$
+    \pause
+    $$
+        E = \begin{pmatrix}
+                1 & 0 & 0\\
+                0 & 1 & 0\\
+                0 & 0 & 1\\
+            \end{pmatrix}
+    $$
+\end{frame}
+
+\begin{frame}{$j$-map as a matrix}
+Recall that for any $z \in \laz$, the map $j_z :\lav \to \lav$ is defined by
+the identity
+\begin{equation}
+\inp{y}{j_z(x)}_\lav = \inp{z}{\br{x}{y}}_\laz.\label{jm}
+\end{equation}
+We wish to find a matrix $J_z$ that represents the map $j_z$. Since $j_z$ maps
+$\lav$ to itself, $J_z$ should be a matrix in $\R^{n\times n}$. Rewriting
+\eqref{jm} in matrix form, we get
+    \begin{align*}
+   \inp{y}{j_z(x)}_\lav & = \inp{z}{\br{x}{y}}_\laz \\
+    y^T E (J_z x) 		& =  z^\t(x^TLy) \\
+    y^T (EJ_z) x		& =  z^\t(-y^TLx) \\
+                        & =  - z^\t(y^TLx) \\
+                        & =  -y^T (z^\t L)x \\
+                        & =  y^T (z^\t (-L)) x \\
+                        & =  y^T (z^\t L^\T) x.
+    \end{align*}
+\end{frame}
+\begin{frame}
+The equation $y^T(EJ_z)x = y^T(z^\t L^\T) x$ must hold for arbitrary vectors
+$x$ and $y$ in $\lav$, implying that
+$$
+EJ_z = z^\t L^\T.
+$$
+Since $\det(E) \neq 0$, it is invertible and
+\begin{equation}
+J_z = E^{-1}(z^\t L^\T).
+\end{equation}
+This gives us a method to compute the $j$-map for any $z$ using only matrix
+computations. Furthermore, if $z = z_k$ is a basis vector of $\laz$, then
+$z_k^\t L^\T$ is just $(L^k)^\T$. Thus, for basis vectors $z_k$, the map
+$j_{z_k}$ is represented by the matrix
+$$
+J_{z_k} = E^{-1}(L^k)^\T.
+$$
+\end{frame}
+\begin{frame}
+Since the $j$-maps are linear, knowing how they act on a basis of $\laz$ is
+good enough. Indeed, we should be able to define a stack of $j$-maps by
+\begin{equation}
+J = E^{-1}L^\T.
+\end{equation}
+The $j$-map $j_z$ \emph{should} then be $J_z = z^\t J$.
+\end{frame}
+
+\begin{frame}{What we did}
+    Using the programming language, sage, we created a program that would
+    compute the $j$-maps of an arbitrary Lie algebra.
+
+\end{frame}
+
+\section*{}
+\subsection*{}
+
+\begin{frame}{TikZ}
+\smallskip
+
+\smallskip
+
+\end{frame}
+
+\section*{}
+\subsection*{}
+
+\begin{frame}{Acknowledgements}
+    \begin{figure}
+    \centering
+    \includegraphics[width=30mm]{lStack.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The L-Stack} %caption
+    \end{figure}
+    
+        \begin{figure}
+    \centering
+    \includegraphics[width=30mm]{lStackNOTOP.tikz} %input file
+    \label{fig:pic} %label name
+    \caption{\footnotesize The L-Stack} %caption
+    \end{figure}
+
+\end{frame}
+
+\end{document}
