@@ -200,7 +200,7 @@ of the characteristic of the underlying field.
     Thus, as long as $2 \neq 0$, $\bre$ is alternating.
 
 \begin{definition}
-    The \emph{center} of a Lie Algebra, $\fg$ is
+    The \emph{center} of a Lie Algebra, $\fg$ is the set
     \\\[\fz=\{z \in \fg \mid [z,x]
     = \zvec \; \forall x \in \fg\}.\]
     \\Thus $z$ is in the center of $\fg$ if and only if
@@ -210,7 +210,7 @@ of the characteristic of the underlying field.
 \end{definition}
 
 \begin{definition}
-    A Lie Algebra, $\fg$ is called \emph{one-step nilpotent}, or \emph{abelian}, if and only if
+    A Lie Algebra $\fg$ is called \emph{one-step nilpotent}, or \emph{abelian}, if and only if
     \[\br{x}{y} = \zvec \; \forall x,y \in \fg. \]
     This is equivalent to \[\fz = \fg.\]
 \end{definition}
@@ -221,7 +221,7 @@ because the Lie Bracket is defined by an identity, and the center inherits its
 properties.
 
 \begin{definition}
-    A Lie Algebra, $\fg$ is called \emph{two-step nilpotent} if and only if
+    A Lie Algebra $\fg$ is called \emph{two-step nilpotent} if and only if
     \[
         [[x,y],z] = \zvec \; \forall x,y,z \in \fg
         \text{ and } \fz \neq \fg.
@@ -346,7 +346,7 @@ $x \in \fg$, $\ad{x}{}$ is a linear function $\ad{x}{}: \fg \to \fz$.
     \[
     \langle\br{x}{y},z\rangle = \langle y,j_z(x)\rangle
     \]
-    for all $y, z \in \lag{g}$.
+    for all $x, y \in \lag{g}$.
 \end{definition}
 
 What this means is that for each vector in the center, there is a map from an
@@ -368,7 +368,7 @@ $$
     L_{21} & L_{22} & \cdots & L_{2n} \\
     \vdots &        & \ddots & \vdots \\
     L_{n1} & L_{n2} & \cdots & L_{nn}
-\end{pmatrix}
+\end{pmatrix}.
 $$
 So $L_{ij}$ is the output of the Lie Bracket on the $i^{\text{th}}$ basis vector with the
 $j^{\text{th}}$ basis vector.
@@ -396,7 +396,7 @@ vector or ``stack'' of matrices indexed by k.)
             \put(10,-6){$L^2$}
             \put(10,-8){$L^3$}
             \put(10.25,-10){$\vdots$}
-            \put(10,-12){$L^m$}
+            \put(10,-12){$L^n$}
             \put(-7,-10){$\vdots$}
             \put(-8,-7.75){$\vdots$}
             \put(7.75,-10){$\vdots$}
@@ -461,7 +461,7 @@ vector or ``stack'' of matrices indexed by k.)
      y = \begin{pmatrix}
              v_1\\
              v_2
-         \end{pmatrix}
+         \end{pmatrix}.
     $$
     Recall from before that 
     $$
@@ -490,13 +490,13 @@ vector or ``stack'' of matrices indexed by k.)
             v_1 \\
             v_2
         \end{pmatrix}
-        = x^{T}Ly
+        = x^{T}Ly.
     $$
     That is
     $\br{x}{y} = x^TLy$.
     \end{example}
-    Thus the Lie bracket of $x$, with $y$ can be fully represented by a matrix
-    multiplication.  This example extends into higher dimensions.
+    This example extends into higher dimensions.  Thus the Lie bracket of $x$,
+    with $y$ can be fully represented by a matrix multiplication.
 
     Recall that the Lie bracket has some additional properties.  Namely,
     \\$[e_i,e_i] = \zvec$, and
@@ -529,7 +529,7 @@ vector or ``stack'' of matrices indexed by k.)
               \zvec & e_3   & -e_2
             \\-e_3  & \zvec & e_1
             \\e_2   & -e_1  & \zvec
-        \end{pmatrix}
+        \end{pmatrix}.
     $$
     \end{example}
     The center of $\RR^3$ with the cross product is only $\{\zvec\}$, since all
@@ -544,7 +544,7 @@ vector or ``stack'' of matrices indexed by k.)
           \zvec & e_3   & \zvec
         \\-e_3  & \zvec & \zvec
         \\\zvec & \zvec & \zvec
-    \end{pmatrix}
+    \end{pmatrix}.
     $$
     \end{example}
     The center is the span of $\{e_3\}$ because the third row is the only row
@@ -564,8 +564,8 @@ vector or ``stack'' of matrices indexed by k.)
     returns a scalar. This means that while $L$ was a matrix of vectors,
     $E$ is simply a standard matrix of numbers.
     \\Now, the inner product has additional properties just as $L$ did. In particular,
-    \\$\inp{e_i}{e_j} = \inp{e_j}{e_i}$
-    $\inp{x}{x} \ge 0 \ \text{and} \ \inp{x}{x}=0 \implies x=\zvec$.
+    \\$\inp{e_i}{e_j} = \inp{e_j}{e_i}$,
+    $\inp{x}{x} \ge 0 \text{, and} \ \inp{x}{x}=0 \implies x=\zvec$.
     \\Furthermore, $\zvec$ cannot be a basis vector because it is linearly dependent with all vectors.
     \\So $\blu{E_{ii}>0}$ and therefore,
     $$
@@ -580,7 +580,7 @@ vector or ``stack'' of matrices indexed by k.)
             E_{12} & \blu{E_{22}} & \cdots & E_{2n} \\
             \vdots & \vdots & \blu{\ddots} & \vdots \\
             E_{1n} & E_{2n} & \cdots & \blu{E_{nn}}
-            \end{pmatrix}
+            \end{pmatrix}.
     $$
 
     It turns out that $\inp{x}{y}$ can be computed in the same way as
@@ -603,7 +603,7 @@ vector or ``stack'' of matrices indexed by k.)
             1 & 0 & 0\\
             0 & 1 & 0\\
             0 & 0 & 1\\
-        \end{pmatrix}
+        \end{pmatrix}.
         $$
     \end{example}
     The dot product's $E$ is the identity matrix, so
@@ -712,6 +712,12 @@ vector or ``stack'' of matrices indexed by k.)
     \end{enumerate}
 
 \begin{thebibliography}{99}
+\bibitem{R1}
+Justin Ryan, Introduction to Lie Algebras. Course notes at SUNY Oswego: 2014.
+
+\bibitem{R2}
+Justin Ryan, Pseudo-Riemannian Generalizations of Heisenberg-Type Algebras. In preparation.
+
 \bibitem{CP4}
 L.\,A.\,Cordero and P.\,E.\,Parker, Pseudoriemannian 2-step
 nilpotent Lie groups, \DGS\ preprint, Wichita: 2000.
